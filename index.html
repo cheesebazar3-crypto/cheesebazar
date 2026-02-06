@@ -1,0 +1,3124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cheese Bazar</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Toast Notification CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <!-- SwiperJS for Product Image Slier -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+  <!-- Existing Title -->
+<title> Cheese Bazar</title>
+<meta name="description" id="meta-desc" content="সুনামগঞ্জের সেরা অনলাইন শপিং প্ল্যাটফর্ম।">
+
+<!-- Facebook/Open Graph -->
+<meta property="og:title" id="og-title" content=" Cheese Bazar">
+<meta property="og:description" id="og-desc" content="সাশ্রয়ী মূল্যে সেরা পণ্য কিনুন।">
+<meta property="og:image" id="og-image" content="">
+
+<!-- Schema.org for Google -->
+<script type="application/ld+json" id="product-schema"></script>
+    <style>
+        :root {
+            --daraz-orange: #f57224;
+            --darazorange-dark:#d0611e;
+            --text-primary: #212121;
+           --text-secondary: #757575;
+            --bg-light: #f5f5f5;
+        }
+       .bg-daraz-orange { background-color: var(--daraz-orange); }
+        .hover\:bg-daraz-orange-dark:hover { background-color: var(--daraz-orange-dark); }
+        .text-daraz-orange { color: var(--daraz-orange); }
+        .boder-daraz-orange { border-color: var(--daraz-orange); }
+        .ring-daraz-orange:focus { --tw-ring-color: var(--daraz-orange); }
+        
+        body { background-color: #fff; color: var(--text-primary); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+        .section { display: none; }
+        .active-section { display: block; }
+        .active-nav { color: var(--daraz-orange); }
+        .product-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); transform: translateY(-2px); }
+       .quantity-btn { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border: 1px solid #e0e0e0; background-color: #fafafa; }
+        .loading-spinner { border: 3px solid rgba(0,0,0,0.1); border-radius: 50%; border-top: 3px solid var(--daraz-orange); width: 24px; height: 24px; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .fade-in { animation: fadeIn 0.3s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        
+        .tab-button { padding: 12px 16px; border-bottom: 2px solid transparent; font-size: 0.9rem; color: var(--text-secondary); white-space: nowrap; }
+        .tab-button.active { border-bottom-color: var(--daraz-orange); color: var(--daraz-orange); font-weight: 500; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 4px 0; min-width: 60px; }
+        .nav-icon { font-size: 1.25rem; margin-bottom: 2px; }
+        .nav-label { font-size: 0.7rem; }
+        .fixed-bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: white; box-shadow: 0 -2px 10px rgba(0,0,0,0.08);z-index: 100; }
+        .content-area { padding-bottom: 70px; }
+        
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); z-index: 1000; align-items: center; justify-content: center; }
+        .modal.active { display: flex; }
+        .modal-content { background-color: white; border-radius: 8px; width: 90%; max-width: 400px; max-height: 90vh; overflow-y: auto; }
+        
+        .sticky-bottom-bar { position: fixed; bottom: 58px; left: 0; right: 0; background: white; padding: 10px 16px; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); z-index: 90; }
+        input:focus, textarea:focus { border-color: var(--daraz-orange) !important; box-shadow: 0 0 0 2px rgba(245, 114, 36, 0.2); outline: none; }
+        
+        .products-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+        
+        .header-search-bar { background-color: #f1f1f1; border-radius: 18px; }
+        .header-search-bar input { background: transparent; border: none; outline: none; }
+
+        .stepper { display: flex; align-items: center; justify-content: center; padding: 16px 0; }
+        .step { display: flex; align-items: center; color: #bdbdbd; font-size: 12px; }
+        .step.active { color: var(--daraz-orange); font-weight: 500; }
+        .step-number { width: 20px; height: 20px; border-radius: 50%; background-color: #bdbdbd; color: white; display: flex; align-items: center; justify-content: center; margin-right: 6px; font-size: 12px; }
+        .step.active .step-number { background-color: var(--daraz-orange); }
+        .step-line { height: 2px; width: 40px; background-color: #bdbdbd; margin: 0 8px; }
+        .step.active .step-line { background-color: var(--daraz-orange); }
+        
+ /* Daraz Exact Replica Slider */
+    #home-slider-container {
+        /* দুই পাশে ১২ পিক্সেল করে গ্যাপ (Total 24px) */
+        width: calc(100% - 24px) !important; 
+        margin: 12px auto !important;
+        
+        /* দারাজের ব্যানারের একদম পারফেক্ট সাইজ (Ratio) */
+        aspect-ratio: 2.5 / 1 !important; 
+        
+        /* হাইট অটো থাকবে না, রেশিও অনুযায়ী ফিক্সড হবে */
+        height: auto !important;
+        
+        border-radius: 12px !important; /* কোণাগুলো সুন্দরভাবে গোল */
+        overflow: hidden;
+        background-color: #eee;
+        box-shadow: none !important;
+    }
+
+    #home-slider-container .swiper-wrapper {
+        height: 100% !important;
+    }
+
+    #home-slider-container .swiper-slide {
+        width: 100%;
+        height: 100%;
+    }
+
+    #home-slider-container .swiper-slide img {
+        width: 100%;
+        height: 100%;
+        
+        /* 'fill' - ইমেজটিকে টেনে বক্সের সমান করবে, কিছুই কাটবে না */
+        object-fit: fill !important;  
+        
+        display: block;
+    }
+
+    /* পেজিনেশন (Dots) */
+    #home-slider-container .swiper-pagination {
+        bottom: 8px !important;
+    }
+    #home-slider-container .swiper-pagination-bullet {
+        width: 6px;
+        height: 6px;
+        background: rgba(255, 255, 255, 0.7);
+        opacity: 1;
+    }
+    #home-slider-container .swiper-pagination-bullet-active {
+        background: #fff !important;
+        width: 12px;
+        border-radius: 4px;
+    }
+
+    /* Pagination Dots */
+    #home-slider-container .swiper-pagination-bullet {
+        width: 6px;
+        height: 6px;
+        background: rgba(255, 255, 255, 0.8);
+        opacity: 0.6;
+    }
+    #home-slider-container .swiper-pagination-bullet-active {
+        background: var(--daraz-orange) !important;
+        width: 16px;
+        border-radius: 4px;
+        opacity: 1;
+    }
+
+    /* Pagination Dots (Optional Style) */
+    #home-slider-container .swiper-pagination-bullet {
+        width: 6px;
+        height: 6px;
+        background: rgba(255, 255, 255, 0.8);
+        opacity: 0.6;
+    }
+    #home-slider-container .swiper-pagination-bullet-active {
+        background: var(--daraz-orange) !important;
+        width: 16px;
+        border-radius: 4px;
+        opacity: 1;
+    }
+
+/* --- REVIEW SYSTEM CSS --- */
+.star-rating-input { display: flex; flex-direction: row-reverse; justify-content: flex-end; gap: 5px; }
+.star-rating-input input { display: none; }
+.star-rating-input label { font-size: 2rem; color: #e0e0e0; cursor: pointer; transition: color 0.2s; }
+.star-rating-input input:checked ~ label,
+.star-rating-input label:hover,
+.star-rating-input label:hover ~ label { color: #ffc107; }
+
+.review-image-box { width: 70px; height: 70px; border: 1px dashed #bdbdbd; border-radius: 4px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; background: #fafafa; }
+.review-img-preview { width: 70px; height: 70px; object-fit: cover; border-radius: 4px; border: 1px solid #eee; }
+.review-img-wrapper { position: relative; width: 70px; height: 70px; }
+.review-img-remove { position: absolute; top: -5px; right: -5px; background: red; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+
+/* Review Gallery in Product View */
+.review-gallery { display: flex; gap: 8px; margin-top: 8px; overflow-x: auto; }
+.review-gallery img { width: 60px; height: 60px; object-fit: cover; border-radius: 4px; cursor: pointer; border: 1px solid #f0f0f0; }
+
+        .header-logo { width: 40px; height: 40px; object-fit: contain; }
+
+        .address-card { border: 1px solid #e0e0e0; padding: 10px; border-radius: 6px; position: relative; }
+        .address-card.active-address { border-color: var(--daraz-orange); background-color: #fffaf0; }
+        
+        .order-tracker { display: flex; align-items: flex-start; padding: 1rem 0; }
+        .tracker-step { flex: 1; text-align: center; position: relative; z-index: 1; }
+        .tracker-icon { width: 30px; height: 30px; border-radius: 50%; background-color: #e0e0e0; color: white; display: flex; align-items: center; justify-content: center; margin: 0 auto 8px; font-size: 14px; border: 2px solid #e0e0e0; transition: all 0.3s ease; }
+        .tracker-label { font-size: 11px; color: #757575; }
+        .tracker-step.completed .tracker-icon { background-color: var(--daraz-orange); border-color: var(--daraz-orange); }
+        .tracker-step.completed .tracker-label { color: var(--daraz-orange); font-weight: 500; }
+        .tracker-line { position: absolute; top: 15px; left: 50%; width: 100%; height: 2px; background-color: #e0e0e0; z-index: -1; }
+        .tracker-step:first-child .tracker-line { left: 50%; }
+        .tracker-step:last-child .tracker-line { width: 0; }
+        .tracker-line-progress { position: absolute; top: 0; left: 0; width: 0%; height: 100%; background-color: var(--daraz-orange); transition: width 0.4s ease-out; }
+        .tracker-step.completed .tracker-line .tracker-line-progress { width: 100%; }
+
+        .skeleton-card { background-color: #fff; border-radius: 8px; overflow: hidden; }
+        .skeleton-img { background-color: #e0e0e0; height: 160px; }
+        .skeleton-text { background-color: #e0e0e0; height: 1rem; margin: 0.5rem; border-radius: 4px; }
+        .skeleton-price { background-color: #e0e0e0; height: 1.25rem; width: 50%; margin: 0.5rem; border-radius: 4px; }
+        .shimmer { position: relative; overflow: hidden; }
+        .shimmer::after { content: ''; position: absolute; top: 0; right: 0; bottom: 0; left: 0; transform: translateX(-100%); background-image: linear-gradient(90deg, rgba(255,255,255,0) 0, rgba(255,255,255,0.2) 20%, rgba(255,255,255,0.5) 60%, rgba(255,255,255,0)); animation: shimmer 1.5s infinite; }
+        @keyframes shimmer { 100% { transform: translateX(100%); } }
+
+        .product-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .horizontal-scroll { display: flex; overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none; }
+        .horizontal-scroll::-webkit-scrollbar { display: none; }
+        .category-card-horizontal { flex: 0 0 auto; width: 80px; text-align: center; }
+
+        .glow-on-hover { box-shadow: 0 0 5px rgba(245, 114, 36, 0.7), 0 0 10px rgba(245, 114, 36, 0.5); transition: box-shadow 0.3s ease-in-out; }
+        .glow-on-hover:hover { box-shadow: 0 0 15px rgba(245, 114, 36, 1), 0 0 20px rgba(245, 114, 36, 0.8); }
+
+ /* Product Image Gallery Wrapper */
+#product-image-swiper {
+    width: 100%;             /* পুরো স্ক্রিন নিবে */
+    max-width: 100vw;        /* স্ক্রিনের বাইরে যাবে না */
+    aspect-ratio: 1 / 1;     /* দারাজের মতো স্কয়ার শেপ */
+    background-color: #fff;  /* ব্যাকগ্রাউন্ড সাদা */
+    position: relative;      /* পজিশনিং ঠিক রাখতে */
+    overflow: hidden;        /* স্লাইডার বাউণ্ডারির বাইরে কিছু যাবে না (Major Fix) */
+    z-index: 1;              /* অন্য এলিমেন্টের উপর উঠে যাবে না */
+    margin-bottom: 0px;
+}
+
+/* Swiper Wrapper & Slide Fix */
+#product-image-swiper .swiper-wrapper {
+    height: 100%;            /* হাইট প্যারেন্ট সমান */
+}
+
+#product-image-swiper .swiper-slide {
+    width: 100%;
+    height: 100%;
+    display: flex;           /* ইমেজ সেন্টারে আনার জন্য */
+    align-items: center;
+    justify_content: center;
+    background-color: #fff;
+    overflow: hidden;        /* ইমেজের বাড়তি অংশ লুকানোর জন্য */
+}
+
+/* Image Styling */
+#product-image-swiper .swiper-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;     /* ইমেজ কাটবে না, পুরোটা দেখাবে */
+    display: block;
+}
+
+/* Pagination Dot Fix (Optional - Daraz Style) */
+#product-image-swiper .swiper-pagination {
+    bottom: 10px !important;
+}
+#product-image-swiper .swiper-pagination-bullet {
+    background: #ccc;
+    opacity: 0.8;
+}
+#product-image-swiper .swiper-pagination-bullet-active {
+    background: var(--daraz-orange) !important;
+    width: 18px;
+    border-radius: 4px;
+}
+    .swiper-pagination-bullet-active { background-color: var(--daraz-orange) !important; }
+  /* Daraz Style Full Screen Zoom */
+#image-zoom-modal { 
+    background-color: #000000 !important; /* একদম কালো ব্যাকগ্রাউন্ড */
+    z-index: 10000 !important; /* সবার উপরে থাকবে */
+}
+
+#image-zoom-modal .swiper-slide { 
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+/* ইমেজ যাতে পুরো স্ক্রিন জুড়ে থাকে */
+.swiper-zoom-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.swiper-zoom-container > img { 
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100vw !important; 
+    max-height: 100vh !important; 
+    object-fit: contain !important; /* ছবি কাটবে না কিন্তু বড় দেখাবে */
+}
+
+/* ক্লোজ বাটনটি একটু সুন্দর করার জন্য */
+#image-zoom-modal .close-btn {
+    top: 40px !important; /* স্ট্যাটাস বারের নিচে */
+    right: 20px !important;
+    background: rgba(255, 255, 255, 0.2) !important;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+        .display-stars .fa-star { color: #ffc107; }
+        .display-stars .fa-star.empty { color: #e0e0e0; }
+
+        #sort-filter-modal .option.selected { color: var(--daraz-orange); font-weight: bold; }
+        #full-search-page-section { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: white; z-index: 200; transform: translateY(100%); transition: transform 0.3s ease-in-out; }
+        #full-search-page-section.active-section { transform: translateY(0); }
+        
+        .variation-option { transition: all 0.2s ease; }
+        .variation-option.active { background-color: #fff0e8; color: var(--daraz-orange); border-color: var(--daraz-orange); }
+        .variation-option:disabled { background-color: #f5f5f5; border-color: #e0e0e0; color: #bdbdbd; cursor: not-allowed; text-decoration: line-through; }
+        
+        .line-clamp-2 { overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+
+        #pull-to-refresh-spinner {
+            position: fixed;
+            top: 70px;
+            left: 50%;
+            transform: translateX(-50%) scale(0.8);
+            z-index: 45;
+            background-color: white;
+            border-radius: 50%;
+            padding: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            opacity: 0;
+            transition: opacity 0.2s, transform 0.2s;
+        }
+        #pull-to-refresh-spinner.visible { opacity: 1; transform: translateX(-50%) scale(1); }
+
+        /* --- DARAZ-STYLE VARIATION POPUP --- */
+        #variation-popup-modal {
+            display: none; 
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 1001;
+        }
+        #variation-popup-modal.active { display: block; }
+        #variation-popup-backdrop {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        #variation-popup-modal.active #variation-popup-backdrop { opacity: 1; }
+        #variation-popup-content {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            background-color: white;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+            max-height: 80vh;
+            overflow-y: auto;
+            transform: translateY(100%);
+            transition: transform 0.3s ease-in-out;
+        }
+        #variation-popup-modal.active #variation-popup-content { transform: translateY(0); }
+        #popup-confirm-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        #popup-confirm-btn:disabled {
+            background-color: #bdbdbd !important;
+            cursor: not-allowed;
+        }
+
+        /* --- FIX: APP LOADER --- */
+        #app-loader {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: white;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        #image-zoom-modal .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 30px;
+            z-index: 1002;
+            cursor: pointer;
+            background: rgba(0,0,0,0.5);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <!-- FIX: INITIAL APP LOADER -->
+    <div id="app-loader">
+        <div class="loading-spinner" style="width: 40px; height: 40px; border-width: 4px;"></div>
+        <p class="mt-4 text-gray-500 text-sm">Loading Store...</p>
+    </div>
+
+    <!-- Header -->
+    <header id="main-header" class="bg-white text-gray-800 p-3 sticky top-0 z-50 shadow-sm">
+        <div class="container mx-auto flex items-center gap-4">
+            <div id="header-back-button" class="cursor-pointer">
+                <i class="fas fa-arrow-left text-xl"></i>
+            </div>
+            <div id="logo-and-name" class="flex items-center gap-2 flex-1 min-w-0">
+                <img id="store-logo" src="https://via.placeholder.com/40" alt="Logo" class="header-logo">
+                <h2 id="header-title" class="text-lg font-bold truncate"></h2>
+            </div>
+        </div>
+    </header>
+
+    <!-- Header for Home Section (Daraz Style) -->
+     <div id="home-header" class="bg-white text-gray-800 p-3 sticky top-0 z-50 shadow-sm" style="display:none;">
+        <div class="container mx-auto flex items-center gap-4">
+             <img id="store-logo-home" src="https://via.placeholder.com/40" alt="Logo" class="header-logo">
+             <div id="home-search-trigger" class="flex-1 flex items-center gap-2 px-3 py-2 header-search-bar cursor-pointer">
+                 <i class="fas fa-search text-gray-400"></i>
+                 <span class="text-sm text-gray-500">Search products...</span>
+             </div>
+             <!-- FIX: Notification Button Logic Added in JS -->
+            <button id="notification-bell-btn" class="relative">
+                <i class="fas fa-bell text-xl text-gray-500"></i>
+                <span id="notification-dot" class="hidden absolute -top-1 -right-1 bg-red-500 h-2 w-2 rounded-full"></span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Pull to Refresh Spinner -->
+    <div id="pull-to-refresh-spinner">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Main Content Sections -->
+    <main class="content-area">
+       <!-- Home Section -->
+        <section id="home-section" class="section active-section fade-in">
+             <div id="home-search-bar-placeholder" class="h-[64px]"></div>
+             <div id="offer-banner" class="bg-red-500 text-white p-2 text-center text-sm font-medium hidden"></div>
+             <div class="container mx-auto p-2">
+                 <div class="swiper-container rounded-lg overflow-hidden" id="home-slider-container">
+                    <div class="swiper-wrapper"></div>
+                    <div class="swiper-pagination"></div>
+                </div>
+             </div>
+             <div class="bg-white p-4 mt-2">
+                <div class="container mx-auto">
+                     <div id="categories-container" class="horizontal-scroll gap-2"></div>
+                </div>
+            </div>
+            <!-- CAMPAIGN CONTAINER -->
+            <div id="campaigns-container" class="my-2"></div>
+            
+            <div class="my-2 bg-white">
+                <div class="p-3 flex justify-between items-center">
+                    <div class="flex items-center gap-2">
+                        <h2 class="text-md font-bold text-daraz-orange">Flash Sale</h2>
+                        <div id="countdown-timer" class="flex gap-1 text-sm">
+                            <span class="bg-gray-800 text-white font-bold w-6 h-6 flex items-center justify-center rounded">00</span>:
+                            <span class="bg-gray-800 text-white font-bold w-6 h-6 flex items-center justify-center rounded">00</span>:
+                            <span class="bg-gray-800 text-white font-bold w-6 h-6 flex items-center justify-center rounded">00</span>
+                        </div>
+                    </div>
+                    <a href="#" class="text-sm text-daraz-orange">Shop More</a>
+                </div>
+            </div>
+            <div class="container mx-auto p-2">
+                <div class="flex justify-between items-center my-3 px-2">
+                    <h2 class="text-md font-bold text-gray-800" id="products-list-title">Recommended for You</h2>
+                </div>
+                <div id="products-container" class="products-grid grid gap-2"></div>
+                <div id="loading-indicator" class="products-grid grid gap-2"></div>
+                <div id="no-products" class="text-center py-8 hidden">
+                    <p class="text-gray-600">No products found</p>
+                </div>
+                <div id="load-more-container" class="text-center py-4">
+                    <button id="load-more-btn" class="bg-white border border-gray-300 text-gray-700 py-2 px-8 rounded-full hover:bg-gray-100">Load More</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Full Search Page Section -->
+        <section id="full-search-page-section" class="section bg-light">
+            <div class="p-3 bg-white shadow-sm flex items-center gap-3">
+                <i id="back-from-full-search" class="fas fa-arrow-left text-xl cursor-pointer"></i>
+                <form id="full-search-form" class="flex-1 flex items-center gap-2 px-3 py-2 header-search-bar">
+                    <i class="fas fa-search text-gray-400"></i>
+                    <input type="search" id="full-search-input" placeholder="Search products..." class="w-full text-sm" autocomplete="off">
+                </form>
+                <button type="submit" form="full-search-form" class="text-daraz-orange font-semibold">Search</button>
+            </div>
+            <div id="search-suggestions-box" class="bg-white shadow-md"></div>
+            <div class="p-4 space-y-4">
+                <div id="search-history-container">
+                    <div class="flex justify-between items-center mb-2">
+                        <h3 class="font-bold text-sm text-gray-600">Search History</h3>
+                        <button id="clear-search-history" class="text-xs text-gray-400"><i class="fas fa-trash-alt"></i> Clear</button>
+                    </div>
+                    <div id="search-history-tags" class="flex flex-wrap gap-2"></div>
+                </div>
+                <div>
+                    <h3 class="font-bold text-sm text-gray-600 mb-2">Trending Searches</h3>
+                    <div id="trending-keywords-tags" class="flex flex-wrap gap-2"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Search Results Section -->
+        <section id="search-section" class="section fade-in">
+            <div class="container mx-auto p-2">
+                <div class="bg-white p-2 rounded-lg shadow-sm mb-3 flex justify-around text-sm text-gray-600">
+                    <button id="sort-btn" class="cursor-pointer hover:text-daraz-orange"><span>Sort By</span> <i class="fas fa-chevron-down text-xs"></i></button>
+                    <button id="price-filter-btn" class="cursor-pointer hover:text-daraz-orange"><span>Price</span> <i class="fas fa-chevron-down text-xs"></i></button>
+                    <button id="rating-filter-btn" class="cursor-pointer hover:text-daraz-orange"><span>Rating</span> <i class="fas fa-chevron-down text-xs"></i></button>
+                </div>
+                <div class="bg-white p-3 rounded-lg shadow-sm mb-3">
+                    <p class="text-sm">Search results for: "<strong id="search-query-display"></strong>"</p>
+                </div>
+                <div id="search-results-container" class="products-grid grid gap-2"></div>
+                <div id="search-loading-indicator" class="hidden products-grid grid gap-2"></div>
+                <div id="no-search-results" class="text-center py-16 hidden">
+                    <i class="fas fa-search text-5xl text-gray-300 mb-4"></i>
+                    <h3 class="font-bold text-lg">No Results Found</h3>
+                    <p class="text-gray-500 text-sm mt-1">We couldn't find any products matching your search.</p>
+                    <div id="no-results-suggestion-section" class="mt-8">
+                        <h4 class="font-bold text-gray-700 mb-3">You Might Be Interested In</h4>
+                        <div id="no-results-products-container" class="products-grid grid gap-2"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- CAMPAIGN PAGE SECTION -->
+        <section id="campaign-page-section" class="section fade-in bg-light">
+            <div id="campaign-page-header"></div>
+            <div class="container mx-auto p-2">
+                <div id="campaign-products-container" class="products-grid grid gap-2"></div>
+                <div id="campaign-loading-indicator" class="hidden products-grid grid gap-2"></div>
+                <div id="no-campaign-products" class="text-center py-16 hidden">
+                    <i class="fas fa-box-open text-5xl text-gray-300 mb-4"></i>
+                    <p class="text-gray-600">No products found for this campaign.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Product View Section -->
+        <section id="product-view-section" class="section fade-in bg-light" style="padding-bottom: 75px;">
+            <div class="container mx-auto">
+                <div id="product-view-content"></div>
+                <div id="product-reviews-section" class="bg-white p-4 mt-2"></div>
+                <div id="recommended-products-section" class="mt-2 hidden">
+                    <div class="container mx-auto p-2">
+                        <h3 class="text-md font-bold text-gray-800 p-2">You Might Also Like</h3>
+                        <div id="recommended-products-container" class="products-grid grid gap-2"></div>
+                    </div>
+                </div>
+                <div class="bg-white p-4 mt-2">
+                     <h3 class="font-bold text-gray-700 mb-2">Seller & Shipping Information</h3>
+                     <div class="text-sm space-y-2 text-gray-600">
+                         <div class="flex justify-between"><span>Sold By:</span> <span id="product-sold-by" class="font-medium text-blue-600"></span></div>
+                         <div class="flex justify-between"><span>Return Policy:</span> <span>7 Day Return</span></div>
+                         <div class="flex justify-between"><span>Warranty:</span> <span>Not Available</span></div>
+                     </div>
+                </div>
+            </div>
+            
+            <div id="product-view-sticky-bar" class="sticky-bottom-bar flex items-center gap-2"></div>
+        </section>
+
+        <!-- Cart Section -->
+        <section id="cart-section" class="section fade-in" style="padding-bottom: 75px;">
+             <div class="bg-white shadow-sm">
+                 <div class="stepper">
+                    <div class="step active"><div class="step-number">1</div><span>Shop</span></div>
+                    <div class="step-line"></div>
+                    <div class="step active"><div class="step-number">2</div><span>Cart</span></div>
+                    <div class="step-line"></div>
+                    <div class="step"><div class="step-number">3</div><span>Checkout</span></div>
+                 </div>
+             </div>
+            <div class="container mx-auto p-2 space-y-2">
+                <div id="cart-items" class="space-y-2"></div>
+                <div id="cart-empty-view" class="hidden text-center py-16">
+                    <i class="fas fa-shopping-cart text-5xl text-gray-300 mb-4"></i>
+                    <p class="text-gray-500">Your cart is empty</p>
+                </div>
+            </div>
+            <div id="cart-summary" class="sticky-bottom-bar flex items-center justify-between hidden"></div>
+        </section>
+
+        <!-- Checkout Section -->
+        <section id="checkout-section" class="section fade-in">
+             <div class="bg-white shadow-sm">
+                 <div class="stepper">
+                    <div class="step active"><div class="step-number">1</div><span>Shop</span></div>
+                    <div class="step-line active"></div>
+                    <div class="step active"><div class="step-number">2</div><span>Cart</span></div>
+                    <div class="step-line active"></div>
+                    <div class="step active"><div class="step-number">3</div><span>Checkout</span></div>
+                 </div>
+             </div>
+             <div class="container mx-auto p-4 space-y-3">
+                <div class="bg-white rounded p-4 shadow-sm">
+                    <h3 class="font-bold mb-3 text-gray-700">Delivery Information</h3>
+                    <form id="delivery-form" class="space-y-4">
+                        <input type="text" id="delivery-name" required class="w-full p-2.5 border rounded text-sm" placeholder="Full Name *" pattern="[A-Za-z ]{3,}" title="Please enter at least 3 characters">
+                        <input type="tel" id="delivery-phone" required class="w-full p-2.5 border rounded text-sm" placeholder="Phone Number *" pattern="01[3-9]\d{8}" title="Please enter a valid Bangladeshi phone number">
+                        <textarea id="delivery-address" required class="w-full p-2.5 border rounded text-sm" rows="3" minlength="10" placeholder="Full Delivery Address *"></textarea>
+                    </form>
+                    <button id="select-address-btn" class="text-daraz-orange text-sm mt-3">Select Saved Address</button>
+                </div>
+
+                <div class="bg-white rounded p-4 shadow-sm">
+                    <h3 class="font-bold mb-3 text-gray-700">Select Delivery Location</h3>
+                    <div id="delivery-location-options" class="space-y-3">
+                        <p class="text-sm text-gray-500">Loading delivery options...</p>
+                    </div>
+                </div>
+                
+                 <div id="coupon-section" class="bg-white rounded p-4 shadow-sm">
+                    <h3 class="font-bold mb-3 text-gray-700">Apply Coupon</h3>
+                    <div class="flex gap-2">
+                        <input type="text" id="coupon-code-input" placeholder="Enter Coupon Code" class="flex-1 p-2.5 border rounded text-sm uppercase">
+                        <button id="apply-coupon-btn" class="bg-daraz-orange text-white font-bold py-2 px-4 rounded">Apply</button>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded p-4 shadow-sm">
+                    <h3 class="font-bold mb-3 text-gray-700">Order Summary</h3>
+                    <!-- FIX: Added Payment Method Display -->
+                    <div class="bg-gray-50 p-3 rounded mb-3 border border-gray-200">
+                        <p class="text-sm font-bold text-gray-700">Payment Method</p>
+                        <p class="text-sm text-gray-600 flex items-center mt-1">
+                            <i class="fas fa-money-bill-wave text-green-500 mr-2"></i> Cash on Delivery
+                        </p>
+                    </div>
+                    <div class="space-y-1 text-sm text-gray-600">
+                        <div class="flex justify-between"><span>Subtotal:</span> <span id="checkout-subtotal">৳0</span></div>
+                        <div class="flex justify-between"><span>Delivery:</span> <span id="checkout-delivery-cost">৳0</span></div>
+                        <div id="checkout-discount-row" class="flex justify-between text-green-600 hidden"><span>Discount:</span> <span id="checkout-discount">- ৳0</span></div>
+                        <div class="flex justify-between font-bold text-gray-800 text-base pt-2 border-t mt-2"><span>Total:</span> <span id="checkout-total" class="text-daraz-orange">৳0</span></div>
+                    </div>
+                </div>
+                 <button id="place-order-btn" class="w-full bg-daraz-orange text-white py-3 rounded hover:bg-daraz-orange-dark flex items-center justify-center font-bold">
+                    <span id="order-btn-text">Place Order</span>
+                </button>
+             </div>
+        </section>
+
+        <!-- Orders Section -->
+        <section id="orders-section" class="section fade-in">
+            <div class="bg-white shadow-sm sticky top-[68px] z-40">
+                <div class="container mx-auto flex overflow-x-auto" id="order-tabs">
+                    <button class="tab-button active" data-status="all">All</button>
+                    <button class="tab-button" data-status="Pending">To Process</button>
+                    <button class="tab-button" data-status="Shipped">To Receive</button>
+                    <button class="tab-button" data-status="Delivered">Completed</button>
+                    <button class="tab-button" data-status="Cancelled">Cancelled</button>
+                </div>
+            </div>
+            <div class="container mx-auto p-2">
+                 <div id="orders-list" class="space-y-3 mt-2"></div>
+                 <div id="orders-empty-view" class="hidden text-center py-16">
+                    <i class="fas fa-box-open text-5xl text-gray-300 mb-4"></i>
+                    <p class="text-gray-500">You have no orders here</p>
+                </div>
+                <div id="orders-loading-indicator" class="text-center py-16">
+                    <div class="loading-spinner mx-auto"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Account Section -->
+        <section id="account-section" class="section fade-in">
+            <div class="bg-white pt-8 pb-4">
+                <div class="container mx-auto px-4 flex justify-between items-center">
+                     <div class="flex items-center gap-4">
+                        <div class="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center overflow-hidden">
+                            <i class="fas fa-user text-3xl text-gray-400"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg" id="user-display-name">Guest User</h3>
+                            <a href="#" id="manage-profile-link" class="text-sm text-daraz-orange">Manage Profile</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container mx-auto p-4" id="profile-management-view">
+                 <div class="bg-white p-4 rounded-lg shadow-sm">
+                    <div class="flex items-center justify-between cursor-pointer" onclick="showSection('orders')">
+                        <h3 class="font-medium text-gray-800">My Orders</h3>
+                        <span class="text-sm text-gray-500">View all <i class="fas fa-chevron-right text-xs"></i></span>
+                    </div>
+                 </div>
+                  <div class="bg-white p-4 rounded-lg shadow-sm mt-3">
+                      <div class="grid grid-cols-4 text-center">
+                          <div class="cursor-pointer" onclick="showSection('orders', 'Pending')">
+                              <i class="fas fa-wallet text-xl text-daraz-orange"></i>
+                              <p class="text-xs mt-1">To Process</p>
+                          </div>
+                           <div class="cursor-pointer" onclick="showSection('orders', 'Shipped')">
+                              <i class="fas fa-truck text-xl text-daraz-orange"></i>
+                              <p class="text-xs mt-1">To Receive</p>
+                          </div>
+                           <div class="cursor-pointer" onclick="showSection('orders', 'Delivered')">
+                              <i class="fas fa-check-circle text-xl text-daraz-orange"></i>
+                              <p class="text-xs mt-1">Completed</p>
+                          </div>
+                          <div class="cursor-pointer" onclick="showSection('orders', 'Delivered')">
+                              <i class="fas fa-star text-xl text-daraz-orange"></i>
+                              <p class="text-xs mt-1">To Review</p>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="bg-white p-4 rounded-lg shadow-sm mt-3 space-y-4">
+                    <div class="flex items-center justify-between cursor-pointer" onclick="showSection('about-us')">
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-info-circle text-gray-600 text-lg"></i>
+                            <h3 class="font-medium text-gray-800">About Us</h3>
+                        </div>
+                        <i class="fas fa-chevron-right text-xs text-gray-500"></i>
+                    </div>
+                    <div class="flex items-center justify-between cursor-pointer" onclick="showSection('support')">
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-headset text-gray-600 text-lg"></i>
+                            <h3 class="font-medium text-gray-800">Support</h3>
+                        </div>
+                        <i class="fas fa-chevron-right text-xs text-gray-500"></i>
+                    </div>
+                 </div>
+            </div>
+            <div class="container mx-auto p-4 hidden" id="edit-profile-view">
+                <h3 class="font-bold text-lg mb-3">Edit Profile</h3>
+                <form id="profile-form" class="bg-white p-4 rounded-lg shadow-sm space-y-4">
+                     <input type="text" id="profile-name" required class="w-full p-2.5 border rounded text-sm" placeholder="Full Name">
+                     <input type="email" id="profile-email" required class="w-full p-2.5 border rounded text-sm bg-gray-100 cursor-not-allowed" placeholder="Email" disabled>
+                     <input type="tel" id="profile-phone" class="w-full p-2.5 border rounded text-sm" placeholder="Phone Number">
+                     <button type="submit" class="w-full bg-daraz-orange text-white py-2.5 rounded hover:bg-daraz-orange-dark font-bold">Save Profile</button>
+                </form>
+
+                <h3 class="font-bold text-lg mt-6 mb-3">Saved Addresses</h3>
+                <div id="address-list" class="space-y-3"></div>
+                <button id="add-address-btn" class="w-full bg-gray-100 text-gray-700 py-2.5 rounded hover:bg-gray-200 mt-4 font-semibold">Add New Address</button>
+                <button id="back-to-account-btn" class="w-full bg-gray-200 text-gray-700 py-2.5 rounded hover:bg-gray-300 mt-3 font-semibold">Back to Account</button>
+            </div>
+            <div class="container mx-auto p-4 mt-6">
+                <button id="login-button" class="w-full bg-white text-daraz-orange border border-daraz-orange py-2.5 rounded hover:bg-orange-50 font-semibold">Login / Register</button>
+                <button id="logout-button" class="w-full bg-gray-200 text-gray-700 py-2.5 rounded hover:bg-gray-300 mt-3 hidden font-semibold">Logout</button>
+            </div>
+        </section>
+        
+        <!-- About Us Section -->
+        <section id="about-us-section" class="section fade-in">
+            <div class="container mx-auto p-4">
+                <div id="about-us-content" class="bg-white p-6 rounded-lg shadow-sm min-h-[300px]">
+                </div>
+            </div>
+        </section>
+
+        <!-- Support Section -->
+        <section id="support-section" class="section fade-in">
+            <div class="container mx-auto p-4 space-y-3">
+                <div class="bg-white p-4 rounded-lg shadow-sm">
+                    <h3 class="font-bold text-lg mb-3 text-gray-800">Contact & Support</h3>
+                    <p class="text-sm text-gray-600 mb-4">Reach out to us through any of the following channels. We're here to help!</p>
+                    <div id="support-links-container" class="space-y-3">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Wishlist Section -->
+        <section id="wishlist-section" class="section fade-in">
+             <div class="container mx-auto p-2">
+                <div id="wishlist-products-container" class="products-grid grid gap-2 mt-2"></div>
+                <div id="wishlist-empty-view" class="hidden text-center py-16">
+                    <p class="text-gray-500">Your wishlist is empty</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Notifications Section -->
+        <section id="notifications-section" class="section fade-in">
+            <div id="notifications-list" class="container mx-auto p-2 space-y-2"></div>
+            <div id="notifications-empty-view" class="hidden text-center py-16">
+                <i class="fas fa-bell-slash text-5xl text-gray-300 mb-4"></i>
+                <p class="text-gray-500">You have no new notifications</p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Modals -->
+    <div id="login-modal" class="modal"><div class="modal-content relative"><button id="close-modal-btn" class="absolute top-2 right-3 text-2xl text-gray-500">&times;</button><div class="p-6"><h3 class="text-xl font-bold text-center mb-4">Welcome Back</h3><form id="login-form" class="space-y-4"><input type="email" id="login-email" required class="w-full p-2.5 border rounded text-sm" placeholder="Email"><div class="relative"><input type="password" id="login-password" required class="w-full p-2.5 border rounded text-sm" placeholder="Password"><i class="fas fa-eye absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-gray-400" id="toggle-login-password"></i></div><button type="submit" class="w-full bg-daraz-orange text-white py-2.5 rounded hover:bg-daraz-orange-dark font-bold">LOGIN</button></form><div class="text-right text-sm mt-2"><a href="#" id="forgot-password-link" class="text-daraz-orange">Forgot Password?</a></div><div class="flex items-center my-4"><div class="flex-grow border-t border-gray-300"></div><span class="flex-shrink mx-4 text-gray-400 text-sm">OR</span><div class="flex-grow border-t border-gray-300"></div></div><button id="google-login-btn" class="w-full bg-white border border-gray-300 text-gray-700 py-2.5 rounded hover:bg-gray-50 font-semibold flex items-center justify-center gap-2"><img src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" alt="Google" class="h-5">Continue with Google</button><p class="text-center text-sm mt-4 text-gray-500">Don't have an account? <a href="#" id="show-register" class="text-daraz-orange font-semibold">Register</a></p></div></div></div>
+    <div id="register-modal" class="modal"><div class="modal-content relative"><button id="close-register-modal-btn" class="absolute top-2 right-3 text-2xl text-gray-500">&times;</button><div class="p-6"><h3 class="text-xl font-bold text-center mb-4">Create Account</h3><form id="register-form" class="space-y-3"><input type="text" id="register-name" required class="w-full p-2.5 border rounded text-sm" placeholder="Name"><input type="email" id="register-email" required class="w-full p-2.5 border rounded text-sm" placeholder="Email"><div class="relative"><input type="password" id="register-password" required class="w-full p-2.5 border rounded text-sm" placeholder="Password (min 6 chars)"><i class="fas fa-eye absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-gray-400" id="toggle-register-password"></i></div><button type="submit" class="w-full bg-daraz-orange text-white py-2.5 rounded hover:bg-daraz-orange-dark font-bold">REGISTER</button></form><p class="text-center text-sm mt-4 text-gray-500">Already have an account? <a href="#" id="show-login" class="text-daraz-orange font-semibold">Login</a></p></div></div></div>
+    <div id="address-modal" class="modal"><div class="modal-content relative"><button id="close-address-modal-btn" class="absolute top-2 right-3 text-2xl text-gray-500">&times;</button><div class="p-6"><h3 class="text-xl font-bold text-center mb-4" id="address-modal-title">Add New Address</h3><form id="address-form" class="space-y-3"><input type="hidden" id="address-id"><input type="text" id="address-label" required class="w-full p-2.5 border rounded text-sm" placeholder="Address Label (e.g. Home, Office)"><input type="text" id="address-receiver-name" required class="w-full p-2.5 border rounded text-sm" placeholder="Receiver Name"><input type="tel" id="address-receiver-phone" required class="w-full p-2.5 border rounded text-sm" placeholder="Receiver Phone"><textarea id="address-full-address" required class="w-full p-2.5 border rounded text-sm" rows="3" placeholder="Full Address"></textarea><button type="submit" class="w-full bg-daraz-orange text-white py-2.5 rounded hover:bg-daraz-orange-dark font-bold">Save Address</button></form></div></div></div>
+    <div id="select-address-modal" class="modal"><div class="modal-content relative"><button id="close-select-address-modal-btn" class="absolute top-2 right-3 text-2xl text-gray-500">&times;</button><div class="p-6"><h3 class="text-xl font-bold text-center mb-4">Select Delivery Address</h3><div id="select-address-list" class="space-y-3 max-h-80 overflow-y-auto"></div><button id="confirm-select-address-btn" class="w-full bg-daraz-orange text-white py-2.5 rounded hover:bg-daraz-orange-dark font-bold mt-4">Confirm Selection</button></div></div></div>
+    <div id="order-details-modal" class="modal"><div id="order-details-content" class="modal-content relative"></div></div>
+
+<div id="image-zoom-modal" class="modal" onclick="this.classList.remove('active')">
+    <!-- FIX: Close button styling and position -->
+    <div class="close-btn" onclick="event.stopPropagation(); document.getElementById('image-zoom-modal').classList.remove('active');">&times;</div>
+    <div id="zoom-swiper-counter" class="absolute top-4 left-1/2 -translate-x-1/2 text-white text-lg z-20"></div>
+    <div class="swiper-container h-full w-full" id="zoom-swiper" onclick="event.stopPropagation()">
+        <div class="swiper-wrapper"></div>
+        <div class="swiper-button-next text-white"></div>
+        <div class="swiper-button-prev text-white"></div>
+    </div>
+</div>
+    
+    <div id="sort-filter-modal" class="modal" onclick="this.classList.remove('active')">
+        <div class="modal-content !max-w-xs !w-4/5 absolute bottom-4 right-4" onclick="event.stopPropagation()">
+            <div id="sort-filter-options" class="p-2 space-y-1"></div>
+        </div>
+    </div>
+    
+    <div id="variation-popup-modal">
+        <div id="variation-popup-backdrop"></div>
+        <div id="variation-popup-content">
+            <div class="p-4 border-b">
+                <div class="flex items-start gap-3">
+                    <img id="popup-product-image" src="https://via.placeholder.com/80" alt="product" class="w-20 h-20 object-cover rounded">
+                    <div>
+                        <p id="popup-product-price" class="text-daraz-orange font-bold text-lg">৳0</p>
+                        <p id="popup-product-stock" class="text-xs text-gray-500">Stock: 0</p>
+                        <p id="popup-selected-variation" class="text-xs text-gray-500 mt-1">Please select a variation</p>
+                    </div>
+                    <button id="popup-close-btn" class="ml-auto text-2xl text-gray-400">&times;</button>
+                </div>
+            </div>
+            <div id="popup-variation-selector" class="p-4 max-h-[40vh] overflow-y-auto"></div>
+            <div class="p-4 border-t flex justify-between items-center">
+                <span class="font-semibold text-sm">Quantity</span>
+                <div class="flex items-center">
+                    <button id="popup-quantity-minus" class="quantity-btn rounded-l">-</button>
+                    <span id="popup-quantity-display" class="px-4 py-1.5 text-sm border-t border-b">1</span>
+                    <button id="popup-quantity-plus" class="quantity-btn rounded-r">+</button>
+                </div>
+            </div>
+            <button id="popup-confirm-btn">Confirm</button>
+        </div>
+    </div>
+
+<!-- Return Request Modal (Paste this before Bottom Nav or Script) -->
+<div id="return-modal" class="modal">
+    <div class="modal-content relative w-full max-w-lg">
+        <button id="close-return-modal-btn" class="absolute top-3 right-4 text-2xl text-gray-500 hover:text-gray-800">&times;</button>
+        <div class="p-5">
+            <h3 class="text-xl font-bold mb-1 text-gray-800">Request Return/Replace</h3>
+            <p class="text-sm text-gray-500 mb-4">Order ID: <span id="return-order-id" class="font-mono font-medium"></span></p>
+
+            <form id="return-form" class="space-y-4">
+                <input type="hidden" id="return-product-id">
+                <input type="hidden" id="return-item-variation">
+                
+                <div class="bg-gray-50 p-3 rounded border flex gap-3 items-center">
+                    <img id="return-product-img" src="" class="w-12 h-12 object-cover rounded">
+                    <div>
+                        <p id="return-product-name" class="text-sm font-semibold line-clamp-1"></p>
+                        <p id="return-product-price" class="text-xs text-gray-500"></p>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Reason <span class="text-red-500">*</span></label>
+                    <select id="return-reason" required class="w-full p-2.5 border rounded text-sm bg-white outline-none">
+                        <option value="">Select a reason</option>
+                        <option value="Damaged Product">Product is damaged/broken</option>
+                        <option value="Wrong Item">Received wrong item</option>
+                        <option value="Quality Issue">Quality not as expected</option>
+                        <option value="Missing Parts">Parts/Accessories missing</option>
+                        <option value="Defective">Product is not working</option>
+                        <option value="Change of Mind">Change of Mind</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Description <span class="text-red-500">*</span></label>
+                    <textarea id="return-description" required rows="3" class="w-full p-2.5 border rounded text-sm outline-none" placeholder="Describe the issue..."></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Upload Proof (Max 5 Images) <span class="text-red-500">*</span></label>
+                    <div class="flex flex-wrap gap-2" id="return-image-preview-container">
+                        <label for="return-image-input" id="return-upload-btn" class="w-20 h-20 border-2 border-dashed border-gray-300 rounded flex flex-col items-center justify-center cursor-pointer hover:border-orange-500 transition-colors">
+                            <i class="fas fa-camera text-gray-400 text-lg"></i>
+                            <span class="text-[10px] text-gray-400 mt-1">Add Photo</span>
+                        </label>
+                    </div>
+                    <input type="file" id="return-image-input" accept="image/*" multiple class="hidden">
+                </div>
+
+                <button type="submit" id="submit-return-btn" class="w-full bg-daraz-orange text-white py-3 rounded hover:bg-orange-600 font-bold shadow-md transition-all">Submit Request</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- WRITE REVIEW MODAL -->
+<div id="write-review-modal" class="modal">
+    <div class="modal-content relative w-full max-w-lg">
+        <button onclick="document.getElementById('write-review-modal').classList.remove('active')" class="absolute top-3 right-4 text-2xl text-gray-500 hover:text-gray-800">&times;</button>
+        <div class="p-5">
+            <h3 class="text-lg font-bold mb-4 text-gray-800">Write a Review</h3>
+            
+            <!-- Product Preview in Modal -->
+            <div class="flex items-center gap-3 mb-4 bg-gray-50 p-2 rounded">
+                <img id="review-modal-img" src="" class="w-12 h-12 object-cover rounded">
+                <div>
+                    <p id="review-modal-name" class="text-sm font-medium line-clamp-1"></p>
+                    <p class="text-xs text-gray-500">Share your experience</p>
+                </div>
+            </div>
+
+            <form id="review-form" class="space-y-4">
+                <input type="hidden" id="review-product-id">
+                
+                <!-- Star Rating -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Product Quality</label>
+                    <div class="star-rating-input justify-center py-2">
+                        <input type="radio" id="star5" name="rating" value="5" required /><label for="star5" title="5 stars"><i class="fas fa-star"></i></label>
+                        <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="4 stars"><i class="fas fa-star"></i></label>
+                        <input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="3 stars"><i class="fas fa-star"></i></label>
+                        <input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="2 stars"><i class="fas fa-star"></i></label>
+                        <input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="1 star"><i class="fas fa-star"></i></label>
+                    </div>
+                </div>
+
+                <!-- Review Text -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Review</label>
+                    <textarea id="review-text" required rows="3" class="w-full p-2.5 border rounded text-sm outline-none focus:border-orange-500" placeholder="Please write your honest review..."></textarea>
+                </div>
+
+                <!-- Image Upload -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Add Photos (Max 5)</label>
+                    <div class="flex flex-wrap gap-2" id="review-img-container">
+                        <label for="review-file-input" id="review-upload-btn" class="review-image-box hover:border-orange-500 transition-colors">
+                            <i class="fas fa-camera text-gray-400 text-lg"></i>
+                            <span class="text-[10px] text-gray-400 mt-1">Upload</span>
+                        </label>
+                    </div>
+                    <input type="file" id="review-file-input" accept="image/*" multiple class="hidden">
+                    <p id="upload-status-text" class="text-xs text-blue-500 mt-1 hidden">Uploading...</p>
+                </div>
+
+                <!-- Anonymous Option -->
+                <div class="flex items-center gap-2">
+                    <input type="checkbox" id="review-anonymous" class="rounded text-orange-500 focus:ring-orange-500">
+                    <label for="review-anonymous" class="text-sm text-gray-600">Review anonymously</label>
+                </div>
+
+                <button type="submit" id="submit-review-btn" class="w-full bg-daraz-orange text-white py-3 rounded hover:bg-orange-600 font-bold shadow-md transition-all">Submit Review</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+    <!-- Bottom Navigation -->
+    <nav class="fixed-bottom-nav flex justify-around items-center">
+        <div class="nav-item active-nav" data-section="home" data-title="Cheese Bazar">
+            <div class="nav-icon"><i class="fas fa-home"></i></div><span class="nav-label">Home</span>
+        </div>
+        <div class="nav-item" data-section="cart" data-title="My Cart">
+            <div class="nav-icon relative"><i class="fas fa-shopping-cart"></i>
+                <span id="cart-count" class="hidden absolute -top-1 -right-2 bg-red-500 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">0</span>
+            </div><span class="nav-label">Cart</span>
+        </div>
+        <div class="nav-item" data-section="wishlist" data-title="Wishlist">
+            <div class="nav-icon"><i class="fas fa-heart"></i></div><span class="nav-label">Wishlist</span>
+        </div>
+        <div class="nav-item" data-section="orders" data-title="My Orders">
+            <div class="nav-icon"><i class="fas fa-box-open"></i></div><span class="nav-label">Orders</span>
+        </div>
+        <div class="nav-item" data-section="account" data-title="Account">
+            <div class="nav-icon"><i class="fas fa-user"></i></div><span class="nav-label">Account</span>
+        </div>
+    </nav>
+    
+    <!-- JS -->
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<!-- MiniSearch Library -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
+    import { 
+        getFirestore, collection, doc, getDoc, setDoc, addDoc, onSnapshot, 
+        query, where, orderBy, serverTimestamp, runTransaction, updateDoc, 
+        deleteDoc, getDocs, limit, startAfter 
+    } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
+    import { 
+        getAuth, onAuthStateChanged, createUserWithEmailAndPassword, 
+        signInWithEmailAndPassword, signOut, updateProfile, GoogleAuthProvider, 
+        signInWithPopup, sendPasswordResetEmail 
+    } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
+
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyBNQGOLiQl03B31eef3JHgwnBYtrrJExQY",
+  authDomain: "cheesebazarr.firebaseapp.com",
+  projectId: "cheesebazarr",
+  storageBucket: "cheesebazarr.firebasestorage.app",
+  messagingSenderId: "528160079536",
+  appId: "1:528160079536:web:1307669280c36266b7c575",
+  measurementId: "G-Y8TDTMN1BY"
+};
+    
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
+
+// --- SUPABASE CONFIG ---
+const SUPABASE_URL = 'https://iwfztkypfrasraliinvi.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml3Znp0a3lwZnJhc3JhbGlpbnZpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc2MTQzNjQsImV4cCI6MjA4MzE5MDM2NH0.46HtJ4sVFMakq5bSuU7oksQWTkhunxWwwAa6TY8oduU';
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY); // এখানেও supabaseClient দিন
+
+// Global Variables er niche boshao
+const IMGBB_API_KEY = "97d4b640c4eade4d075a2ac53a11d668"; // ⚠️ Ekhane tomar nijer ImgBB Key boshao
+let returnImages = [];
+
+// --- REVIEW SYSTEM CONFIG ---
+const REVIEW_IMGBB_KEY = "f98d334b4d5ef37f5fb164b48909f0f6"; // Using the key you provided in context
+let currentReviewImages = [];
+
+// --- REVIEW IMAGE UPLOAD LOGIC ---
+const uploadToImgBB = async (file) => {
+    const formData = new FormData();
+    formData.append("image", file);
+    
+    try {
+        const response = await fetch(`https://api.imgbb.com/1/upload?key=${REVIEW_IMGBB_KEY}`, {
+            method: "POST",
+            body: formData
+        });
+        const data = await response.json();
+        if (data.success) {
+            return data.data.url;
+        } else {
+            throw new Error("Upload failed");
+        }
+    } catch (error) {
+        console.error("ImgBB Error:", error);
+        throw error;
+    }
+};
+
+// Event Listener for Review File Input
+document.getElementById('review-file-input').addEventListener('change', async (e) => {
+    const files = Array.from(e.target.files);
+    if (files.length === 0) return;
+
+    if (currentReviewImages.length + files.length > 5) {
+        showToast("Max 5 images allowed.", "#ef4444");
+        return;
+    }
+
+    const statusText = document.getElementById('upload-status-text');
+    const uploadBtn = document.getElementById('review-upload-btn');
+    const container = document.getElementById('review-img-container');
+    
+    statusText.classList.remove('hidden');
+    
+    for (const file of files) {
+        try {
+            const url = await uploadToImgBB(file);
+            currentReviewImages.push(url);
+            
+            // Add to UI
+            const div = document.createElement('div');
+            div.className = "review-img-wrapper";
+            div.innerHTML = `
+                <img src="${url}" class="review-img-preview">
+                <div class="review-img-remove" onclick="removeReviewImage('${url}', this)">&times;</div>
+            `;
+            container.insertBefore(div, uploadBtn);
+        } catch (error) {
+            showToast("Failed to upload an image.", "#ef4444");
+        }
+    }
+    
+    statusText.classList.add('hidden');
+    if (currentReviewImages.length >= 5) uploadBtn.style.display = 'none';
+});
+
+window.removeReviewImage = (url, el) => {
+    currentReviewImages = currentReviewImages.filter(img => img !== url);
+    el.parentElement.remove();
+    document.getElementById('review-upload-btn').style.display = 'flex';
+};
+
+// --- OPEN REVIEW MODAL ---
+window.openReviewModal = (productId, productName, productImg) => {
+    if (!auth.currentUser) return showLoginModal();
+    
+    // Reset Form
+    document.getElementById('review-form').reset();
+    document.getElementById('review-product-id').value = productId;
+    currentReviewImages = [];
+    
+    // Reset UI
+    const container = document.getElementById('review-img-container');
+    container.innerHTML = `
+        <label for="review-file-input" id="review-upload-btn" class="review-image-box hover:border-orange-500 transition-colors">
+            <i class="fas fa-camera text-gray-400 text-lg"></i>
+            <span class="text-[10px] text-gray-400 mt-1">Upload</span>
+        </label>`;
+    document.getElementById('review-upload-btn').style.display = 'flex';
+    
+    // Set Header Info
+    document.getElementById('review-modal-name').textContent = productName;
+    document.getElementById('review-modal-img').src = productImg;
+    
+    document.getElementById('write-review-modal').classList.add('active');
+};
+
+// --- SUBMIT REVIEW (Final Fix: Transaction & Validation) ---
+document.getElementById('review-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = document.getElementById('submit-review-btn');
+    
+    // ভ্যালিডেশন: রেটিং সিলেক্ট করা হয়েছে কিনা
+    const ratingInput = document.querySelector('input[name="rating"]:checked');
+    if (!ratingInput) {
+        showToast("Please select a star rating.", "#ef4444");
+        return;
+    }
+
+    btn.disabled = true; 
+    btn.textContent = "Submitting...";
+    
+    try {
+        const productId = document.getElementById('review-product-id').value;
+        const rating = parseInt(ratingInput.value);
+        const text = document.getElementById('review-text').value;
+        const isAnon = document.getElementById('review-anonymous').checked;
+        
+        const user = auth.currentUser;
+        if (!user) throw new Error("You must be logged in.");
+        
+        const reviewData = {
+            userId: user.uid,
+            userName: isAnon ? "Anonymous" : (user.displayName || "Customer"),
+            userAvatar: isAnon ? null : (user.photoURL || null),
+            rating: rating,
+            reviewText: text,
+            images: currentReviewImages,
+            productId: productId,
+            status: "Pending",
+            createdAt: serverTimestamp()
+        };
+
+        // 🔥 Transaction: একসাথে রিভিউ সেভ হবে এবং প্রোডাক্টের রেটিং আপডেট হবে
+        const productRef = doc(db, "products", productId);
+        const newReviewRef = doc(collection(db, `products/${productId}/reviews`));
+
+        await runTransaction(db, async (transaction) => {
+            const productDoc = await transaction.get(productRef);
+            if (!productDoc.exists()) {
+                throw "Product does not exist!";
+            }
+
+            const pData = productDoc.data();
+            const currentAvg = pData.avgRating || 0;
+            const currentCount = pData.reviewCount || 0;
+
+            // নতুন গড় রেটিং ক্যালকুলেশন
+            const newCount = currentCount + 1;
+            const newAvg = ((currentAvg * currentCount) + rating) / newCount;
+
+            // ১. রিভিউ সেভ করা
+            transaction.set(newReviewRef, reviewData);
+
+            // ২. প্রোডাক্টের রেটিং আপডেট করা
+            transaction.update(productRef, {
+                avgRating: newAvg,
+                reviewCount: newCount
+            });
+        });
+
+        showToast("Review submitted successfully!");
+        document.getElementById('write-review-modal').classList.remove('active');
+        
+        // প্রোডাক্ট পেজ রিফ্রেশ না করে আপডেট দেখানোর জন্য
+        if(currentProductState.productData && currentProductState.productData.id === productId) {
+             window.viewProduct(productId, false);
+        }
+
+    } catch (error) {
+        console.error(error);
+        showToast("Error: " + error.message, "#ef4444");
+    } finally {
+        btn.disabled = false;
+        btn.textContent = "Submit Review";
+    }
+});
+
+    // --- GLOBAL STATE ---
+    let productsUnsubscribe = null, ordersUnsubscribe = null, slidersUnsubscribe = null, categoriesUnsubscribe = null, offersUnsubscribe = null, settingsUnsubscribe = null, campaignsUnsubscribe = null;
+    let cartUnsubscribe = null, wishlistUnsubscribe = null, profileUnsubscribe = null, reviewsUnsubscribe = null, notificationsUnsubscribe = null;
+
+    let allProducts = [];
+    let userCart = [];
+    let userWishlist = [];
+    let storeSettings = { deliveryCosts: { inside: 70, outside: 110 }, storeName: "Cheese Bazar" };
+    let currentCategoryFilter = 'All';
+    let currentSearchQuery = '';
+    let lastVisibleProduct = null;
+    let isFetchingProducts = false;
+    const PRODUCTS_PER_PAGE = 10;
+    let homeScrollPosition = 0;
+
+    let currentProductState = {
+        productData: null,
+        selectedOptions: {},
+        selectedCombination: null,
+        productImageSwiper: null,
+        popupAction: null, 
+        popupQuantity: 1,
+        popupSelectedOptions: {},
+        popupSelectedCombination: null
+    };
+
+    // --- HELPER FUNCTIONS ---
+    const debounce = (func, wait) => {
+        let timeout;
+        return function(...args) {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => func(...args), wait);
+        };
+    };
+    const showToast = (message, color = '#f57224') => Toastify({ text: message, duration: 3000, gravity: "top", position: "center", style: { background: color, borderRadius: "50px", boxShadow: "none" } }).showToast();
+    const escapeHtml = (unsafe) => unsafe ? unsafe.toString().replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;") : '';
+
+    const unsubscribePageUI = () => {
+        if (productsUnsubscribe) productsUnsubscribe(); 
+        if (ordersUnsubscribe) ordersUnsubscribe();
+        if (slidersUnsubscribe) slidersUnsubscribe(); 
+        if (categoriesUnsubscribe) categoriesUnsubscribe();
+        if (offersUnsubscribe) offersUnsubscribe(); 
+        if (reviewsUnsubscribe) reviewsUnsubscribe(); 
+        if (campaignsUnsubscribe) campaignsUnsubscribe();
+    }
+
+    const unsubscribeUserData = () => {
+        if (cartUnsubscribe) cartUnsubscribe();
+        if (wishlistUnsubscribe) wishlistUnsubscribe(); 
+        if (profileUnsubscribe) profileUnsubscribe();
+        if (settingsUnsubscribe) settingsUnsubscribe();
+        if (notificationsUnsubscribe) notificationsUnsubscribe();
+    }
+
+    // --- SEARCH EXECUTION ---
+    const executeSearch = (query) => { 
+        currentSearchQuery = query; 
+        if (currentSearchQuery) { 
+            let history = JSON.parse(localStorage.getItem('searchHistory') || '[]'); 
+            history = history.filter(item => item.toLowerCase() !== currentSearchQuery.toLowerCase()); 
+            history.unshift(currentSearchQuery); 
+            if (history.length > 10) history.pop(); 
+            localStorage.setItem('searchHistory', JSON.stringify(history)); 
+        } 
+        showSection('search', query); 
+    };
+
+// --- SEARCH FUNCTION (Supabase Version) ---
+// এই অংশটি ৭৬৩ নম্বর লাইনের দিকে আছে, এটি রিপ্লেস করুন
+const renderSearchPage = async (queryParam, sortType = 'relevance') => {
+    const searchTerm = queryParam || currentSearchQuery;
+    if (!searchTerm) return;
+
+    const container = document.getElementById('search-results-container');
+    const loading = document.getElementById('search-loading-indicator');
+    const noResults = document.getElementById('no-search-results');
+    
+    container.innerHTML = '';
+    noResults.classList.add('hidden');
+    loading.classList.remove('hidden');
+
+    try {
+        // --- আপনি এখানে সাধারণ কুয়েরি রেখে দিয়েছেন, এটি বদলে RPC করতে হবে ---
+        let { data, error } = await supabaseClient
+            .rpc('search_products_v2', { query_text: searchTerm });
+
+        loading.classList.add('hidden');
+
+        if (error) throw error;
+
+        if (!data || data.length === 0) {
+            noResults.classList.remove('hidden');
+        } else {
+            // সর্টিং লজিক (দাম অনুযায়ী সাজানো)
+            if (sortType === 'price_asc') data.sort((a, b) => (a.price || 0) - (b.price || 0));
+            if (sortType === 'price_desc') data.sort((a, b) => (b.price || 0) - (a.price || 0));
+            
+            container.innerHTML = data.map(p => renderProductCard(p.id, p)).join('');
+        }
+    } catch (e) {
+        console.error("Search Error:", e);
+        loading.classList.add('hidden');
+    }
+};
+
+    // --- AUTOCOMPLETE SUGGESTIONS ---
+document.getElementById('full-search-input').addEventListener('input', debounce(async (e) => { 
+    const queryText = e.target.value.trim();
+    const suggestionsBox = document.getElementById('search-suggestions-box'); 
+    
+    if (queryText.length < 2) { 
+        suggestionsBox.innerHTML = ''; 
+        return; 
+    } 
+
+    const { data } = await supabaseClient
+        .from('products')
+        .select('id, name, imageurl') // এখানে imageurl দিন
+        .ilike('name', `%${queryText}%`)
+        .limit(5);
+    
+    suggestionsBox.innerHTML = data && data.length > 0 
+        ? data.map(r => `
+            <div class="p-3 border-b cursor-pointer hover:bg-gray-100 search-suggestion-item" data-id="${r.id}">
+                <div class="flex items-center gap-2">
+                    <img src="${r.imageurl || r.imageUrl}" class="w-8 h-8 object-cover rounded">
+                    <p class="text-sm font-medium">${r.name}</p>
+                </div>
+            </div>`).join('') 
+        : '';
+}, 300));
+
+    // --- EXISTING APP LOGIC (UNCHANGED) ---
+    // (বাকি সব লজিক আগের মতোই রাখা হয়েছে যাতে আপনার অ্যাপ ব্রেক না করে)
+
+    const listenToStoreSettings = () => {
+        if (settingsUnsubscribe) settingsUnsubscribe();
+        const docRef = doc(db, "settings", "siteConfig");
+        settingsUnsubscribe = onSnapshot(docRef, (docSnap) => {
+             if (docSnap.exists()) {
+                const data = docSnap.data();
+                if(data.storeSettings) {
+                    storeSettings = {...storeSettings, ...data.storeSettings};
+                    document.getElementById('store-logo').src = storeSettings.storeLogoUrl || 'https://via.placeholder.com/40';
+                   document.getElementById('store-logo-home').src = storeSettings.storeLogoUrl || 'https://via.placeholder.com/40';
+                    document.getElementById('header-title').textContent = storeSettings.storeName || 'Cheese Bazar';
+                    document.querySelector('.nav-item[data-section="home"]').dataset.title = storeSettings.storeName || 'Cheese Bazar';
+                    if(document.getElementById('product-sold-by')) document.getElementById('product-sold-by').textContent = storeSettings.storeName || 'Official Store';
+                }
+                if(data.deliveryCosts) storeSettings.deliveryCosts = data.deliveryCosts;
+                if(data.supportLinks) {
+                    storeSettings.supportLinks = data.supportLinks;
+                    if(document.getElementById('support-section').classList.contains('active-section')) renderSupportLinks(data.supportLinks);
+                }
+                if(data.aboutUs) {
+                    storeSettings.aboutUs = data.aboutUs;
+                    if(document.getElementById('about-us-section').classList.contains('active-section')) renderAboutUs(data.aboutUs);
+                }
+            }
+        });
+    };
+
+const listenToOrders = async (status = 'all') => { 
+        document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active')); 
+        const activeTab = document.querySelector(`.tab-button[data-status="${status}"]`); 
+        if (activeTab) activeTab.classList.add('active'); 
+        
+        const list = document.getElementById('orders-list'), 
+              loading = document.getElementById('orders-loading-indicator'), 
+              emptyView = document.getElementById('orders-empty-view'); 
+        
+        list.innerHTML = ''; 
+        loading.classList.remove('hidden'); 
+        emptyView.classList.add('hidden'); 
+
+        // ১. যদি ইউজার লগইন করা থাকে (লগইন ইউজার লজিক)
+        if (auth.currentUser) {
+            const q = query(collection(db, "orders"), where("userId", "==", auth.currentUser.uid)); 
+            ordersUnsubscribe = onSnapshot(q, (snapshot) => { 
+                handleOrderData(snapshot.docs.map(doc => ({id: doc.id, ...doc.data()})), status);
+            }, (error) => { loading.classList.add('hidden'); }); 
+        } 
+        // ২. যদি ইউজার গেস্ট হয় (গেস্ট ইউজার লজিক)
+        else {
+            const guestOrderIds = JSON.parse(localStorage.getItem('guestOrderIds') || '[]');
+            if (guestOrderIds.length === 0) {
+                loading.classList.add('hidden');
+                emptyView.classList.remove('hidden');
+                return;
+            }
+
+            try {
+                // গেস্টদের অর্ডার আইডিগুলো ধরে ডাটাবেস থেকে অর্ডার নিয়ে আসা
+                const orderPromises = guestOrderIds.map(id => getDoc(doc(db, "orders", id)));
+                const snapshots = await Promise.all(orderPromises);
+                const guestOrders = snapshots.filter(s => s.exists()).map(s => ({id: s.id, ...s.data()}));
+                handleOrderData(guestOrders, status);
+            } catch (e) {
+                loading.classList.add('hidden');
+                list.innerHTML = `<p class="text-center text-red-500">Error loading orders.</p>`;
+            }
+        }
+    };
+
+    // অর্ডার ডাটা প্রসেস করার জন্য নতুন হেল্পার ফাংশন
+    const handleOrderData = (orders, statusFilter) => {
+        const list = document.getElementById('orders-list'), 
+              loading = document.getElementById('orders-loading-indicator'), 
+              emptyView = document.getElementById('orders-empty-view');
+
+        let filteredOrders = orders;
+        if (statusFilter === 'Pending') filteredOrders = orders.filter(o => ['Pending', 'Processing'].includes(o.status));
+        else if (statusFilter === 'Shipped') filteredOrders = orders.filter(o => ['Shipped', 'On The Way'].includes(o.status));
+        else if (statusFilter === 'Delivered') filteredOrders = orders.filter(o => o.status === 'Delivered');
+        else if (statusFilter === 'Cancelled') filteredOrders = orders.filter(o => ['Cancelled', 'Returned'].includes(o.status));
+
+        filteredOrders.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+
+        loading.classList.add('hidden'); 
+        if (filteredOrders.length > 0) {
+            emptyView.classList.add('hidden');
+            list.innerHTML = filteredOrders.map(order => renderOrderCard(order.id, order)).join('');
+        } else {
+            emptyView.classList.remove('hidden');
+        }
+    };
+
+    const listenToCart = (uid) => {
+        if (cartUnsubscribe) cartUnsubscribe();
+        const cartItemsRef = collection(db, `users/${uid}/cartItems`);
+        cartUnsubscribe = onSnapshot(cartItemsRef, (snapshot) => {
+            userCart = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            updateCartCount();
+            if (document.getElementById('cart-section').classList.contains('active-section')) renderCart();
+            if (document.getElementById('checkout-section').classList.contains('active-section')) updateCheckoutSummary();
+        }, (error) => console.error("Error listening to cart:", error) );
+    };
+    
+    const listenToWishlist = (uid) => {
+        if (wishlistUnsubscribe) wishlistUnsubscribe();
+        wishlistUnsubscribe = onSnapshot(collection(db, `users/${uid}/wishlist`), (snapshot) => {
+            userWishlist = snapshot.docs.map(doc => doc.id);
+            if (document.getElementById('wishlist-section').classList.contains('active-section')) renderWishlist();
+            document.querySelectorAll('.wishlist-btn').forEach(button => {
+                const productId = button.dataset.productid;
+                const icon = button.querySelector('.wishlist-btn-icon');
+                if (userWishlist.includes(productId)) {
+                    icon.classList.remove('far'); icon.classList.add('fas');
+                    button.classList.add('text-red-500'); button.classList.remove('text-gray-300', 'text-gray-500');
+                } else {
+                    icon.classList.add('far'); icon.classList.remove('fas');
+                    button.classList.remove('text-red-500');
+                    if (document.getElementById('product-view-section').contains(button)) button.classList.add('text-gray-500');
+                    else button.classList.add('text-gray-300');
+                }
+            });
+        }, (error) => console.error("Error listening to wishlist:", error) );
+    };
+    
+    const listenToUserProfile = (uid) => {
+         if (profileUnsubscribe) profileUnsubscribe();
+         profileUnsubscribe = onSnapshot(doc(db, "users", uid), (docSnap) => {
+             if (docSnap.exists()) {
+                 const userProfile = docSnap.data();
+                 document.getElementById('user-display-name').textContent = userProfile.name || auth.currentUser.displayName || 'User';
+                 document.getElementById('profile-name').value = userProfile.name || '';
+                 document.getElementById('profile-email').value = userProfile.email || '';
+                 document.getElementById('profile-phone').value = userProfile.phone || '';
+                 renderAddresses(userProfile.addresses || []);
+             }
+         }, (error) => console.error("Error listening to profile:", error) );
+    }
+
+    const initializeUserDependentState = (user) => {
+        unsubscribePageUI();
+        unsubscribeUserData();
+        
+        listenToStoreSettings();
+        if (user) {
+            listenToCart(user.uid);
+            listenToWishlist(user.uid);
+            listenToUserProfile(user.uid);
+            document.getElementById('login-button').classList.add('hidden');
+            document.getElementById('logout-button').classList.remove('hidden');
+        } else {
+            // গেস্ট মোড: LocalStorage থেকে কার্ট এবং উইশলিস্ট লোড হবে
+            userCart = JSON.parse(localStorage.getItem('guestCart') || '[]');
+            userWishlist = JSON.parse(localStorage.getItem('guestWishlist') || '[]');
+            
+            updateCartCount();
+            document.getElementById('user-display-name').textContent = "Guest User";
+            document.getElementById('login-button').classList.remove('hidden');
+            document.getElementById('logout-button').classList.add('hidden');
+
+            // যদি ইউজার উইশলিস্ট বা কার্ট পেজে থাকে, তবে ডাটা শো করাবে
+            if (document.getElementById('cart-section').classList.contains('active-section')) renderCart();
+            if (document.getElementById('wishlist-section').classList.contains('active-section')) renderWishlist();
+        }
+    }
+    
+    document.getElementById('login-form').addEventListener('submit', async (e) => { e.preventDefault(); try { await signInWithEmailAndPassword(auth, document.getElementById('login-email').value, document.getElementById('login-password').value); showToast('Login successful!'); hideLoginModal(); } catch (error) { showToast(`Login failed: ${error.message}`, '#ef4444'); } });
+    document.getElementById('register-form').addEventListener('submit', async (e) => { e.preventDefault(); const name = document.getElementById('register-name').value, email = document.getElementById('register-email').value, password = document.getElementById('register-password').value; if (password.length < 6) { showToast('Password must be at least 6 characters long.', '#ef4444'); return; } try { const userCredential = await createUserWithEmailAndPassword(auth, email, password); await updateProfile(userCredential.user, { displayName: name }); await setDoc(doc(db, "users", userCredential.user.uid), { name, email, role: 'customer', createdAt: serverTimestamp() }); showToast('Registration successful!'); hideRegisterModal(); } catch (error) { showToast(`Registration failed: ${error.message}`, '#ef4444');} });
+    document.getElementById('logout-button').addEventListener('click', () => { if(confirm('Are you sure you want to logout?')) { signOut(auth).then(() => showSection('home')); } });
+    document.getElementById('google-login-btn').addEventListener('click', async () => { const provider = new GoogleAuthProvider(); try { const result = await signInWithPopup(auth, provider); const user = result.user; const userDocRef = doc(db, 'users', user.uid); const userDocSnap = await getDoc(userDocRef); if (!userDocSnap.exists()) { await setDoc(userDocRef, { name: user.displayName, email: user.email, role: 'customer', createdAt: serverTimestamp() }); } showToast('Login with Google successful!'); hideLoginModal(); } catch (error) { showToast(`Google login failed: ${error.message}`, '#ef4444'); } });
+    document.getElementById('forgot-password-link').addEventListener('click', async (e) => { e.preventDefault(); const email = document.getElementById('login-email').value || prompt("Please enter your email address to reset your password:"); if (email) { try { await sendPasswordResetEmail(auth, email); showToast(`A password reset link has been sent to ${email}`); } catch (error) { showToast(`Error: ${error.message}`, '#ef4444'); } } else if (!document.getElementById('login-email').value) { showToast(`Please enter an email address first.`, '#ef4444'); } });
+
+    const loginModal = document.getElementById('login-modal'), registerModal = document.getElementById('register-modal'), addressModal = document.getElementById('address-modal'), selectAddressModal = document.getElementById('select-address-modal'), orderDetailsModal = document.getElementById('order-details-modal');
+    const showLoginModal = () => loginModal.classList.add('active'), hideLoginModal = () => loginModal.classList.remove('active'), showRegisterModal = () => registerModal.classList.add('active'), hideRegisterModal = () => registerModal.classList.remove('active'), showAddressModal = () => addressModal.classList.add('active'), hideAddressModal = () => addressModal.classList.remove('active'), showSelectAddressModal = () => selectAddressModal.classList.add('active'), hideSelectAddressModal = () => selectAddressModal.classList.remove('active');
+    window.hideOrderDetailsModal = () => orderDetailsModal.classList.remove('active');
+    const showOrderDetailsModal = () => orderDetailsModal.classList.add('active');
+
+    document.getElementById('login-button').addEventListener('click', showLoginModal);
+    document.getElementById('close-modal-btn').addEventListener('click', hideLoginModal);
+    document.getElementById('close-register-modal-btn').addEventListener('click', hideRegisterModal);
+    document.getElementById('show-register').addEventListener('click', (e) => { e.preventDefault(); hideLoginModal(); showRegisterModal(); });
+    document.getElementById('show-login').addEventListener('click', (e) => { e.preventDefault(); hideRegisterModal(); showLoginModal(); });
+    document.getElementById('close-address-modal-btn').addEventListener('click', hideAddressModal);
+    document.getElementById('close-select-address-modal-btn').addEventListener('click', hideSelectAddressModal);
+    document.getElementById('add-address-btn').addEventListener('click', () => { document.getElementById('address-form').reset(); document.getElementById('address-id').value = ''; document.getElementById('address-modal-title').textContent = 'Add New Address'; showAddressModal(); });
+
+    const setupPasswordToggle = (inputId, toggleId) => {
+        const passwordInput = document.getElementById(inputId);
+        const toggleIcon = document.getElementById(toggleId);
+
+        if (passwordInput && toggleIcon) {
+            toggleIcon.addEventListener('click', () => {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                toggleIcon.classList.toggle('fa-eye');
+                toggleIcon.classList.toggle('fa-eye-slash');
+            });
+        }
+    };
+    setupPasswordToggle('login-password', 'toggle-login-password');
+    setupPasswordToggle('register-password', 'toggle-register-password');
+
+    const mainHeader = document.getElementById('main-header'), homeHeader = document.getElementById('home-header');
+
+    const clearCheckoutSession = () => {
+        sessionStorage.removeItem('buyNowItem');
+        sessionStorage.removeItem('checkoutForm');
+        sessionStorage.removeItem('appliedCoupon');
+    };
+
+    const navigate = (sectionId, param, addToHistory) => {
+    const state = { sectionId, param };
+    if (addToHistory) {
+        // ক্লিন ইউআরএল তৈরি: /home অথবা /product-view/12345
+        const url = (sectionId === 'home') ? '/' : `/${sectionId}` + (param ? `/${param}` : '');
+        history.pushState(state, '', url);
+    }
+    renderPage(state);
+}
+
+    window.showSection = (sectionId, param = null, addToHistory = true) => {
+        const currentSection = document.querySelector('.section.active-section')?.id.replace('-section', '');
+        if (currentSection === 'checkout' && sectionId !== 'checkout') {
+            clearCheckoutSession();
+        }
+        navigate(sectionId, param, addToHistory);
+    };
+    
+    const renderPage = (state) => {
+        const { sectionId, param } = state;
+        
+        const currentSection = document.querySelector('.section.active-section');
+        if (currentSection && currentSection.id === 'home-section') {
+            homeScrollPosition = window.scrollY;
+        }
+        
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active-section'));
+        document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active-nav'));
+        
+        const section = document.getElementById(`${sectionId}-section`);
+        if (!section) return renderPage({ sectionId: 'home', param: null }); 
+        section.classList.add('active-section');
+        
+        const activeNavItem = document.querySelector(`.nav-item[data-section="${sectionId}"]`);
+        if (activeNavItem) activeNavItem.classList.add('active-nav');
+
+        const isHomePage = sectionId === 'home', isFullSearchPage = sectionId === 'full-search-page';
+        mainHeader.style.display = (isHomePage || isFullSearchPage) ? 'none' : 'flex';
+        homeHeader.style.display = isHomePage ? 'flex' : 'none';
+        document.getElementById('header-back-button').style.visibility = history.length > 1 ? 'visible' : 'hidden';
+        
+        let title = activeNavItem ? activeNavItem.dataset.title : storeSettings.storeName;
+        const titleMap = { 'product-view': 'Product Details', 'search': 'Search Results', 'notifications': 'Notifications', 'support': 'Support', 'checkout': 'Checkout', 'about-us': 'About Us', 'campaign-page': 'Campaign' };
+        if (titleMap[sectionId]) title = titleMap[sectionId];
+        document.getElementById('header-title').textContent = title;
+
+        unsubscribePageUI(); 
+        
+        switch (sectionId) {
+            case 'home': 
+                window.scrollTo(0, homeScrollPosition);
+                listenToSliders(); 
+                listenToCategories(); 
+                listenToOffers(); 
+                listenToCampaigns(); 
+                startCountdown(); 
+                if (currentCategoryFilter !== 'All' || allProducts.length === 0) { 
+                    currentCategoryFilter = 'All'; 
+                    fetchProducts(true); 
+                } 
+                break;
+            case 'cart': renderCart(); window.scrollTo(0, 0); break;
+            case 'checkout': renderCheckout(); window.scrollTo(0, 0); break;
+            case 'orders': listenToOrders(param || 'all'); window.scrollTo(0, 0); break;
+            case 'wishlist': renderWishlist(); window.scrollTo(0, 0); break;
+            case 'search': 
+                window.scrollTo(0, 0);
+                renderSearchPage(param); 
+                break;
+            case 'full-search-page': 
+                // Just show the page, index builds in background
+                break;
+            case 'product-view': if(param) window.viewProduct(param, false); break;
+            case 'campaign-page': if(param) renderCampaignPage(param); window.scrollTo(0, 0); break;
+            case 'notifications': listenToNotifications(); window.scrollTo(0, 0); break;
+            case 'support': renderSupportLinks(storeSettings.supportLinks); window.scrollTo(0, 0); break;
+            case 'about-us': renderAboutUs(storeSettings.aboutUs); window.scrollTo(0, 0); break;
+        }
+    };
+
+    window.onpopstate = (event) => { if (event.state) renderPage(event.state); };
+    document.querySelectorAll('.nav-item').forEach(item => item.addEventListener('click', () => showSection(item.dataset.section, null, true) ));
+    document.getElementById('header-back-button').addEventListener('click', () => history.back() );
+    
+    let homeSwiper;
+    const listenToSliders = () => {
+        if (homeSwiper) {
+            homeSwiper.destroy(true, true);
+            homeSwiper = null;
+        }
+        const sliderWrapper = document.querySelector('#home-slider-container .swiper-wrapper');
+        const sliderContainer = document.getElementById('home-slider-container');
+        if (!sliderWrapper || !sliderContainer) return;
+
+        sliderContainer.style.display = 'block';
+        sliderWrapper.innerHTML = `<div class="swiper-slide"><div class="bg-gray-200 h-full w-full animate-pulse"></div></div>`;
+
+        slidersUnsubscribe = onSnapshot(query(collection(db, "sliders"), orderBy("createdAt", "desc")), (snapshot) => {
+            if (snapshot.empty) {
+                sliderContainer.style.display = 'none';
+                return;
+            }
+            
+            sliderWrapper.innerHTML = snapshot.docs.map(doc => {
+                const data = doc.data();
+                const hasLink = data.campaignPageId && data.campaignPageId !== "";
+                const clickAction = hasLink ? `onclick="window.showSection('campaign-page', '${data.campaignPageId}')"` : '';
+                const cursorClass = hasLink ? 'cursor-pointer' : '';
+                
+                return `<div class="swiper-slide" ${clickAction}>
+                            <img src="${escapeHtml(data.imageUrl)}" class="w-full h-full object-cover ${cursorClass}" loading="lazy">
+                        </div>`;
+            }).join('');
+
+            homeSwiper = new Swiper('#home-slider-container', {
+                loop: true,
+                autoplay: { delay: 4000, disableOnInteraction: false },
+                pagination: { el: '.swiper-pagination', clickable: true },
+                effect: 'fade',
+                fadeEffect: { crossFade: true },
+            });
+        }, (error) => console.error("Error listening to sliders:", error));
+    };
+    const listenToOffers = () => { const offerBanner = document.getElementById('offer-banner'); const q = query(collection(db, "offers"), orderBy("createdAt", "desc"), limit(1)); offersUnsubscribe = onSnapshot(q, (snapshot) => { if (snapshot.empty) { offerBanner.classList.add('hidden'); return; } const latestOffer = snapshot.docs[0].data(); offerBanner.innerHTML = `<i class="fas fa-gift mr-2"></i> ${escapeHtml(latestOffer.title)}: ${escapeHtml(latestOffer.message)}`; offerBanner.classList.remove('hidden'); }, (error) => console.error("Error listening to offers:", error)); };
+    const listenToCategories = () => { const categoriesContainer = document.getElementById('categories-container'); categoriesUnsubscribe = onSnapshot(query(collection(db, "categories"), orderBy("name")), (snapshot) => { categoriesContainer.innerHTML = renderCategoryCard('All', 'https://i.ibb.co/1Y7ScG4n/download.jpg') + snapshot.docs.map(doc => renderCategoryCard(doc.data().name, doc.data().imageUrl)).join(''); categoriesContainer.querySelectorAll('.category-card-horizontal').forEach(card => card.addEventListener('click', () => { currentCategoryFilter = card.dataset.categoryName; fetchProducts(true); })); }, (error) => console.error("Error listening to categories:", error)); };
+    const renderCategoryCard = (name, imageUrl) => `<div class="category-card-horizontal p-1 cursor-pointer" data-category-name="${escapeHtml(name)}"><div class="w-16 h-16 mx-auto flex items-center justify-center bg-gray-100 rounded-full overflow-hidden"><img src="${escapeHtml(imageUrl)}" class="w-full h-full object-cover" loading="lazy"></div><span class="text-xs mt-1 block text-gray-700 truncate">${escapeHtml(name)}</span></div>`;
+    const renderSkeletonLoader = (count) => { let skeletons = ''; for (let i = 0; i < count; i++) { skeletons += `<div class="skeleton-card shimmer"><div class="skeleton-img"></div><div class="p-2"><div class="skeleton-text"></div><div class="skeleton-text w-3/4"></div><div class="skeleton-price"></div></div></div>`; } return skeletons; };
+
+    const fetchProducts = async (isNewQuery = false) => {
+        if (isFetchingProducts) return; isFetchingProducts = true;
+        const productsContainer = document.getElementById('products-container'), loadingIndicator = document.getElementById('loading-indicator'), loadMoreBtn = document.getElementById('load-more-btn');
+        if (isNewQuery) { allProducts = []; productsContainer.innerHTML = ''; lastVisibleProduct = null; document.getElementById('products-list-title').textContent = currentCategoryFilter === 'All' ? 'Recommended for You' : `Products in ${currentCategoryFilter}`; }
+        loadingIndicator.innerHTML = renderSkeletonLoader(4); loadMoreBtn.disabled = true;
+        try {
+            let q; const productsRef = collection(db, "products"); const constraints = [];
+            if (currentCategoryFilter !== 'All') constraints.push(where("category", "==", currentCategoryFilter));
+            if (lastVisibleProduct && !isNewQuery) constraints.push(startAfter(lastVisibleProduct));
+            constraints.push(limit(PRODUCTS_PER_PAGE)); q = query(productsRef, ...constraints);
+            const documentSnapshots = await getDocs(q);
+            loadingIndicator.innerHTML = ''; document.getElementById('no-products').classList.toggle('hidden', allProducts.length > 0 || !documentSnapshots.empty);
+            const newProducts = documentSnapshots.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            allProducts.push(...newProducts); productsContainer.innerHTML += newProducts.map(p => renderProductCard(p.id, p)).join('');
+            lastVisibleProduct = documentSnapshots.docs[documentSnapshots.docs.length - 1];
+            
+            if (documentSnapshots.docs.length < PRODUCTS_PER_PAGE) {
+                loadMoreBtn.classList.add('hidden');
+            } else {
+                loadMoreBtn.classList.remove('hidden');
+            }
+            
+        } catch (error) { console.error("Error fetching products:", error); loadingIndicator.innerHTML = '<p class="text-red-500 text-center col-span-full">Could not load products.</p>'; } 
+        finally { isFetchingProducts = false; loadMoreBtn.disabled = false; }
+    };
+    document.getElementById('load-more-btn').addEventListener('click', () => fetchProducts(false));
+    
+    const listenToCampaigns = () => {
+        const container = document.getElementById('campaigns-container');
+        if (!container) return;
+        if (campaignsUnsubscribe) campaignsUnsubscribe();
+        const q = query(collection(db, "campaignPages"), where("status", "==", "published"), orderBy("createdAt", "desc"));
+        campaignsUnsubscribe = onSnapshot(q, (snapshot) => {
+            if (snapshot.empty) {
+                container.innerHTML = '';
+                container.style.display = 'none';
+                return;
+            }
+            container.style.display = 'block';
+            container.innerHTML = `
+                <div class="p-3 bg-white">
+                    <h2 class="text-md font-bold text-gray-800">Special Campaigns</h2>
+                </div>
+                <div class="p-2 grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    ${snapshot.docs.map(doc => renderCampaignBanner(doc.id, doc.data())).join('')}
+                </div>
+            `;
+        }, (error) => console.error("Error listening to campaigns:", error));
+    };
+
+    const renderCampaignBanner = (id, data) => {
+        return `
+        <div class="rounded-lg overflow-hidden shadow-sm cursor-pointer" onclick="showSection('campaign-page', '${id}')">
+            <img src="${escapeHtml(data.coverImage)}" alt="${escapeHtml(data.title)}" class="w-full h-32 object-cover">
+            <div class="p-3 bg-white">
+                <h3 class="font-bold text-gray-800 truncate">${escapeHtml(data.title)}</h3>
+                <p class="text-xs text-gray-500 line-clamp-2 mt-1">${escapeHtml(data.description || '')}</p>
+            </div>
+        </div>
+        `;
+    };
+
+    const renderCampaignPage = async (campaignId) => {
+        const headerDiv = document.getElementById('campaign-page-header');
+        const productsContainer = document.getElementById('campaign-products-container');
+        const loadingIndicator = document.getElementById('campaign-loading-indicator');
+        const noProductsView = document.getElementById('no-campaign-products');
+
+        headerDiv.innerHTML = '';
+        productsContainer.innerHTML = '';
+        noProductsView.classList.add('hidden');
+        loadingIndicator.innerHTML = renderSkeletonLoader(4);
+        loadingIndicator.classList.remove('hidden');
+
+        try {
+            const campaignDoc = await getDoc(doc(db, "campaignPages", campaignId));
+            if (!campaignDoc.exists()) {
+                headerDiv.innerHTML = '<p class="p-4 text-center text-red-500">Campaign not found.</p>';
+                loadingIndicator.classList.add('hidden');
+                return;
+            }
+            const campaign = campaignDoc.data();
+            
+            document.getElementById('header-title').textContent = campaign.title;
+
+            headerDiv.innerHTML = `
+                <div class="bg-white">
+                    <img src="${escapeHtml(campaign.coverImage)}" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <h2 class="text-xl font-bold">${escapeHtml(campaign.title)}</h2>
+                        <p class="text-sm text-gray-600 mt-2">${(campaign.description || '').replace(/\n/g, '<br>')}</p>
+                    </div>
+                </div>
+            `;
+
+            let allowedProductIds = [];
+            if (campaign.productGroups && Array.isArray(campaign.productGroups)) {
+                campaign.productGroups.forEach(group => {
+                    if (group.productIds && Array.isArray(group.productIds)) {
+                        allowedProductIds = [...allowedProductIds, ...group.productIds];
+                    }
+                });
+            }
+            
+            allowedProductIds = [...new Set(allowedProductIds)];
+
+            if (allowedProductIds.length === 0) {
+                loadingIndicator.classList.add('hidden');
+                noProductsView.classList.remove('hidden');
+                return;
+            }
+
+            const productPromises = allowedProductIds.slice(0, 50).map(id => getDoc(doc(db, "products", id)));
+            const productSnaps = await Promise.all(productPromises);
+            
+            const campaignProducts = productSnaps
+                .filter(snap => snap.exists())
+                .map(snap => ({ id: snap.id, ...snap.data() }));
+
+            loadingIndicator.classList.add('hidden');
+            if (campaignProducts.length > 0) {
+                productsContainer.innerHTML = campaignProducts.map(p => renderProductCard(p.id, p)).join('');
+            } else {
+                noProductsView.classList.remove('hidden');
+            }
+
+        } catch (error) {
+            console.error("Error rendering campaign page:", error);
+            headerDiv.innerHTML = '<p class="p-4 text-center text-red-500">Could not load campaign.</p>';
+            loadingIndicator.classList.add('hidden');
+        }
+    };
+
+    document.getElementById('home-search-trigger').addEventListener('click', () => showSection('full-search-page'));
+    document.getElementById('back-from-full-search').addEventListener('click', () => history.back());
+    document.getElementById('full-search-form').addEventListener('submit', (e) => { 
+        e.preventDefault(); 
+        const query = document.getElementById('full-search-input').value.trim(); 
+        if (query) executeSearch(query); 
+    });
+    document.getElementById('search-suggestions-box').addEventListener('click', (e) => { 
+        const item = e.target.closest('.search-suggestion-item'); 
+        if (item) window.viewProduct(item.dataset.id); 
+    });
+
+// index.html ফাইলের renderProductCard ফাংশনটি এভাবে আপডেট করুন
+const renderProductCard = (id, data) => { 
+    const isInWishlist = userWishlist.includes(id); 
+    
+    // --- ইমেজ এবং প্রাইজের জন্য ফিক্স ---
+    // সুপাবেসে কলামের নাম 'price' এবং 'imageurl' (সব ছোট হাত)
+    const basePrice = data.price || data.basePrice || 0;
+    const currentImage = data.imageurl || data.imageUrl || 'https://via.placeholder.com/150';
+    
+    const hasDiscount = data.oldPrice && data.oldPrice > basePrice; 
+    let priceDisplay = `৳${basePrice}`; 
+    
+    // স্টার রেন্ডারিং লজিক
+    const ratingNum = data.avgRating || 0;
+    const reviewCount = data.reviewCount || 0;
+    let starsHtml = '';
+    for (let i = 1; i <= 5; i++) {
+        if (i <= Math.round(ratingNum)) {
+            starsHtml += '<i class="fas fa-star text-yellow-400 text-[10px]"></i>';
+        } else {
+            starsHtml += '<i class="fas fa-star text-gray-300 text-[10px]"></i>';
+        }
+    }
+
+    return `
+    <div class="product-card" onclick="window.viewProduct('${id}')">
+        <div class="h-40 bg-gray-100 relative">
+            <img src="${escapeHtml(currentImage)}" alt="${escapeHtml(data.name)}" class="w-full h-full object-cover" loading="lazy">
+            <button class="absolute top-2 right-2 text-2xl wishlist-btn ${isInWishlist ? 'text-red-500' : 'text-gray-300'}" data-productid="${id}" onclick="event.stopPropagation(); window.toggleWishlist('${id}')">
+                <i class="wishlist-btn-icon ${isInWishlist ? 'fas' : 'far'} fa-heart"></i>
+            </button>
+        </div>
+        <div class="p-2 flex flex-col flex-grow">
+            <h3 class="font-normal text-sm text-gray-800 leading-tight line-clamp-2 flex-grow">${escapeHtml(data.name)}</h3>
+            <div class="mt-2">
+                <p class="text-daraz-orange font-semibold text-base">${priceDisplay}</p>
+                ${hasDiscount ? `<div class="flex items-center gap-2"><span class="text-xs text-gray-400 line-through">৳${data.oldPrice}</span> <span class="text-xs text-red-500 font-medium">-${Math.round(((data.oldPrice - basePrice) / data.oldPrice) * 100)}%</span></div>` : ''}
+            </div>
+            <div class="flex items-center mt-1 gap-1">
+                <div class="flex">${starsHtml}</div>
+                <span class="text-xs text-gray-500">(${reviewCount})</span>
+            </div>
+        </div>
+    </div>`; 
+};
+    
+    let zoomSwiper;
+
+    const initializeZoomSwiper = (imageUrls, initialSide) => {
+        const zoomModal = document.getElementById('image-zoom-modal');
+        const zoomWrapper = document.querySelector('#zoom-swiper .swiper-wrapper');
+        const zoomCounter = document.getElementById('zoom-swiper-counter');
+
+        zoomWrapper.innerHTML = imageUrls.map(url => `
+            <div class="swiper-slide">
+                <div class="swiper-zoom-container">
+                    <img src="${escapeHtml(url)}" loading="lazy">
+                </div>
+            </div>
+        `).join('');
+
+        if (zoomSwiper) {
+            zoomSwiper.destroy(true, true);
+            zoomSwiper = null;
+        }
+
+        zoomModal.classList.add('active');
+
+        const updateZoomCounter = (swiperInstance) => {
+            if (zoomCounter) {
+                zoomCounter.textContent = `${swiperInstance.realIndex + 1} / ${swiperInstance.slides.length}`;
+            }
+        };
+
+        zoomSwiper = new Swiper('#zoom-swiper', {
+            initialSlide: initialSide,
+            zoom: true,
+            observer: true,       
+            observeParents: true, 
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev'
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            on: {
+                init: function () {
+                    updateZoomCounter(this);
+                },
+                slideChange: function () {
+                    updateZoomCounter(this);
+                }
+            }
+        });
+    };
+  
+    const updateVariationView = (context) => {
+        const { productData } = currentProductState;
+        if (!productData) return;
+        const isPopup = context === 'popup';
+
+        const selectedOptions = isPopup ? currentProductState.popupSelectedOptions : currentProductState.selectedOptions;
+        const container = isPopup ? document.getElementById('variation-popup-content') : document.getElementById('product-view-content');
+        const priceEl = isPopup ? document.getElementById('popup-product-price') : document.getElementById('product-price-display');
+        const oldPriceEl = isPopup ? null : document.getElementById('product-old-price-display'); 
+        const stockEl = isPopup ? document.getElementById('popup-product-stock') : document.getElementById('product-stock-display');
+        const imageEl = isPopup ? document.getElementById('popup-product-image') : null; 
+        const selectedVariationEl = isPopup ? document.getElementById('popup-selected-variation') : null;
+        const confirmBtn = isPopup ? document.getElementById('popup-confirm-btn') : null;
+
+        if (!container) return;
+        
+        if(productData.hasVariations){
+            const variationGroups = container.querySelectorAll('.variation-group');
+            variationGroups.forEach(group => {
+                const currentType = group.dataset.variationType;
+                const options = group.querySelectorAll('.variation-option');
+                options.forEach(optionBtn => {
+                    const optionValue = optionBtn.dataset.value;
+                    let tempSelection = { ...selectedOptions, [currentType]: optionValue };
+                    const isAvailable = productData.variationCombinations.some(c => 
+                        Object.keys(tempSelection).every(type => c.combination[type] === tempSelection[type])
+                    );
+                    optionBtn.disabled = !isAvailable;
+                });
+            });
+        }
+
+        const allOptionsSelected = !productData.hasVariations || productData.variations.every(v => selectedOptions[v.type]);
+        let finalCombination = null;
+
+        if (allOptionsSelected) {
+                if (productData.hasVariations) {
+                finalCombination = productData.variationCombinations.find(c => 
+                    productData.variations.every(v => c.combination[v.type] === selectedOptions[v.type])
+                );
+            } else {
+                finalCombination = { price: productData.price, stock: productData.stock, combination: null, imageUrl: productData.imageUrl };
+            }
+
+            if (finalCombination) {
+                priceEl.textContent = `৳${finalCombination.price}`;
+                if(oldPriceEl) oldPriceEl.textContent = ''; 
+                stockEl.textContent = isPopup ? `Stock: ${finalCombination.stock}` : (finalCombination.stock > 0 ? 'In Stock' : 'Out of Stock');
+                if (imageEl && finalCombination.imageUrl) imageEl.src = finalCombination.imageUrl;
+
+                if (selectedVariationEl) {
+                    selectedVariationEl.textContent = productData.hasVariations ? `Selected: ${Object.values(selectedOptions).join(', ')}` : 'Standard Product';
+                }
+                if (confirmBtn) {
+                    const canConfirm = finalCombination.stock >= currentProductState.popupQuantity;
+                    confirmBtn.disabled = !canConfirm;
+                    confirmBtn.textContent = canConfirm ? 'Confirm' : 'Out of Stock';
+                }
+            } else { 
+                const basePrice = productData.basePrice !== undefined ? productData.basePrice : productData.price;
+                priceEl.textContent = `৳${basePrice}`;
+                stockEl.textContent = 'Unavailable';
+                if (selectedVariationEl) selectedVariationEl.textContent = 'Combination unavailable';
+                if (confirmBtn) { confirmBtn.disabled = true; confirmBtn.textContent = 'Unavailable'; }
+            }
+        } else { 
+            const basePrice = productData.basePrice !== undefined ? productData.basePrice : productData.price;
+            priceEl.textContent = `৳${basePrice}`;
+                if (oldPriceEl) { 
+                if (productData.oldPrice && productData.oldPrice > basePrice) {
+                    oldPriceEl.textContent = `৳${productData.oldPrice}`;
+                } else {
+                    oldPriceEl.textContent = '';
+                }
+            }
+            stockEl.textContent = 'Select all options';
+            if (selectedVariationEl) selectedVariationEl.textContent = 'Please select a variation';
+            if (confirmBtn) { 
+                confirmBtn.disabled = true;
+                confirmBtn.textContent = 'Select Options';
+            }
+        }
+        
+        if (!isPopup) {
+            currentProductState.selectedCombination = finalCombination;
+            const stickyBar = document.getElementById('product-view-sticky-bar');
+            if(!stickyBar) return;
+            
+            const overallStock = finalCombination ? finalCombination.stock : productData.stock;
+
+            if (overallStock <= 0 && !allOptionsSelected) {
+                stickyBar.innerHTML = `<button class="flex-1 bg-gray-400 text-white py-3 rounded-full cursor-not-allowed" disabled>Out of Stock</button>`;
+            } else {
+                stickyBar.innerHTML = `
+                    <button class="w-16 h-12 flex items-center justify-center text-daraz-orange text-2xl"><i class="fas fa-store"></i></button>
+                    <button onclick="window.buyNow()" class="flex-1 bg-blue-500 text-white py-3 rounded-full font-bold">Buy Now</button>
+                    <button onclick="window.addToCart()" class="flex-1 bg-daraz-orange text-white py-3 rounded-full font-bold">Add to Cart</button>`;
+            }
+        }
+        if (isPopup) {
+            currentProductState.popupSelectedCombination = finalCombination;
+        }
+    };
+
+    const handleVariationSelection = (e, context) => {
+        if (!e.target.matches('.variation-option')) return;
+        const isPopup = context === 'popup';
+        const selectedOptions = isPopup ? currentProductState.popupSelectedOptions : currentProductState.selectedOptions;
+
+        const { type, value } = e.target.dataset;
+        const wasActive = e.target.classList.contains('active');
+        
+        e.target.parentElement.querySelectorAll('.variation-option').forEach(btn => btn.classList.remove('active'));
+
+        if (wasActive) {
+            delete selectedOptions[type];
+        } else {
+            selectedOptions[type] = value;
+            e.target.classList.add('active');
+        }
+        updateVariationView(context);
+    };
+
+    window.viewProduct = async (productId, addToHistory = true) => { 
+        if(addToHistory) showSection('product-view', productId);
+        const contentDiv = document.getElementById('product-view-content'), stickyBar = document.getElementById('product-view-sticky-bar'); 
+        contentDiv.innerHTML = `<div class="text-center py-16"><div class="loading-spinner mx-auto"></div></div>`; 
+        stickyBar.innerHTML = ''; 
+        document.getElementById('product-reviews-section').innerHTML = ''; 
+        document.getElementById('recommended-products-section').classList.add('hidden');
+
+        const docSnap = await getDoc(doc(db, "products", productId)); 
+        if (docSnap.exists()) { 
+            const product = {id: docSnap.id, ...docSnap.data()}; 
+
+// ১. টাইটেল এবং মেটা ডেসক্রিপশন আপডেট
+const pageTitle = `${product.name} | Cheese Bazar`;
+document.title = pageTitle;
+document.getElementById('meta-desc').setAttribute("content", product.description.substring(0, 160));
+
+// ২. ফেসবুক শেয়ারিং মেটা ট্যাগ আপডেট
+document.getElementById('og-title').content = pageTitle;
+document.getElementById('og-desc').content = product.description.substring(0, 100);
+document.getElementById('og-image').content = product.imageUrl;
+
+// ৩. গুগল শপিং স্কিমা (JSON-LD) আপডেট
+const schemaData = {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": product.name,
+    "image": product.imageUrl,
+    "description": product.description,
+    "offers": {
+        "@type": "Offer",
+        "priceCurrency": "BDT",
+        "price": product.basePrice || product.price,
+        "availability": product.stock > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock"
+    }
+};
+document.getElementById('product-schema').textContent = JSON.stringify(schemaData);
+            
+            currentProductState = { ...currentProductState, productData: product, selectedOptions: {}, selectedCombination: null };
+            const imageUrls = product.imageUrls && product.imageUrls.length > 0 ? product.imageUrls : [product.imageUrl]; 
+            const isInWishlist = userWishlist.includes(productId); 
+            
+            let variationsHTML = '';
+            if(product.hasVariations) {
+                variationsHTML = `<div class="bg-white p-4 mt-2" id="variation-selector">` + 
+                product.variations.map(vt => `<div class="variation-group mb-3" data-variation-type="${escapeHtml(vt.type)}"><p class="font-semibold text-sm mb-2">${escapeHtml(vt.type)}</p><div class="flex flex-wrap gap-2">${vt.options.map(opt => `<button class="variation-option border px-4 py-2 rounded text-sm" data-type="${escapeHtml(vt.type)}" data-value="${escapeHtml(opt)}">${escapeHtml(opt)}</button>`).join('')}</div></div>`).join('') + `</div>`;
+            }
+            
+            const descriptionHTML = (product.description || 'No description available.').replace(/\n/g, '<br>');
+
+            contentDiv.innerHTML = `
+                <div class="swiper-container" id="product-image-swiper"><div class="swiper-wrapper">${imageUrls.map(url => `<div class="swiper-slide"><img src="${escapeHtml(url)}" class="w-full h-full object-contain" loading="lazy"></div>`).join('')}</div><div class="swiper-pagination"></div><div class="swiper-counter absolute bottom-2 right-3 text-white text-xs bg-black bg-opacity-50 px-2 py-1 rounded-full z-10"></div></div>
+                <div class="bg-white p-4">
+                    <div id="product-price-container" class="flex items-center gap-2">
+                            <span class="text-2xl font-bold text-daraz-orange" id="product-price-display"></span>
+                            <span class="text-md text-gray-400 line-through" id="product-old-price-display"></span>
+                    </div>
+                    <h2 class="text-lg font-medium text-gray-800 mt-1">${escapeHtml(product.name)}</h2>
+                    <div class="flex items-center justify-between text-sm text-gray-500 mt-2">
+                        <span><i class="fas fa-star text-yellow-400"></i> ${product.avgRating?.toFixed(1) || 'No Ratings'} (${product.reviewCount || 0})</span>
+                        <span id="product-stock-display">${(product.stock || 0) > 0 ? 'In Stock' : 'Out of Stock'}</span>
+                        <button class="wishlist-btn ${isInWishlist ? 'text-red-500' : 'text-gray-500'} cursor-pointer" data-productid="${productId}" onclick="event.stopPropagation(); window.toggleWishlist('${productId}')"><i class="wishlist-btn-icon ${isInWishlist ? 'fas' : 'far'} fa-heart mr-1"></i> Wishlist</button>
+                    </div>
+                </div>
+                ${variationsHTML}
+                <div class="bg-white p-4 mt-2"><h3 class="font-bold text-gray-700 mb-2">Details</h3><p class="text-sm text-gray-600 leading-relaxed">${descriptionHTML}</p></div>`; 
+            
+            const basePrice = product.basePrice !== undefined ? product.basePrice : product.price;
+            document.getElementById('product-price-display').textContent = `৳${basePrice}`;
+            const oldPriceEl = document.getElementById('product-old-price-display');
+            if (product.oldPrice && product.oldPrice > basePrice) {
+                oldPriceEl.textContent = `৳${product.oldPrice}`;
+            } else {
+                oldPriceEl.textContent = '';
+            }
+
+            const swiperCounter = document.querySelector('#product-image-swiper .swiper-counter');
+            const updateCounter = (swiperInstance) => { if (swiperCounter && swiperInstance.slides.length > 0) swiperCounter.textContent = `${swiperInstance.realIndex + 1} / ${swiperInstance.slides.length}`; };
+            const swiper = new Swiper('#product-image-swiper', { pagination: { el: '.swiper-pagination', clickable: true }, on: { init: updateCounter, slideChange: updateCounter, click: (swiper) => initializeZoomSwiper(imageUrls, swiper.clickedIndex) } });
+            currentProductState.productImageSwiper = swiper;
+
+            if (product.hasVariations) {
+                contentDiv.addEventListener('click', (e) => handleVariationSelection(e, 'page'));
+            } 
+            updateVariationView('page'); 
+
+            listenToReviews(productId); 
+            renderRecommendedProducts(productId, product.category);
+        } 
+    };
+
+    const listenToReviews = (productId) => { if (reviewsUnsubscribe) reviewsUnsubscribe(); const q = query(collection(db, `products/${productId}/reviews`), orderBy('createdAt', 'desc')); reviewsUnsubscribe = onSnapshot(q, (snapshot) => renderReviewsSection(productId, snapshot.docs.map(doc => ({id: doc.id, ...doc.data()}))) ); };
+    
+// --- UPDATED RENDER REVIEWS (DARAZ STYLE) ---
+    const renderReviewsSection = (productId, reviews) => { 
+        const container = document.getElementById('product-reviews-section'); 
+        
+        // Calculate Average
+        const totalReviews = reviews.length;
+        const avgRating = totalReviews > 0 
+            ? (reviews.reduce((sum, r) => sum + r.rating, 0) / totalReviews).toFixed(1) 
+            : 0;
+
+        // Header HTML with "Write Review" button
+        const headerHTML = `
+            <div class="flex justify-between items-start mb-4 border-b pb-4">
+                <div>
+                    <h3 class="font-bold text-gray-700">Ratings & Reviews (${totalReviews})</h3>
+                    <div class="flex items-center gap-2 mt-1">
+                        <span class="text-3xl font-bold text-gray-800">${avgRating}/5</span>
+                        <div class="display-stars text-xl text-yellow-400">${renderStars(avgRating)}</div>
+                    </div>
+                </div>
+                <button onclick="window.openReviewModal('${productId}', '${escapeHtml(currentProductState.productData.name)}', '${currentProductState.productData.imageUrl}')" 
+                    class="bg-daraz-orange text-white text-xs px-3 py-2 rounded font-medium shadow-sm hover:bg-orange-600">
+                    <i class="fas fa-pen mr-1"></i> Write Review
+                </button>
+            </div>
+        `;
+
+        if(reviews.length === 0) {
+            container.innerHTML = headerHTML + `<div class="text-center py-6 text-gray-400 text-sm">No reviews yet. Be the first to review!</div>`;
+            container.style.display = 'block';
+            return;
+        }
+
+        // Generate List HTML
+        let reviewsHTML = reviews.map(review => {
+            // Image Gallery HTML
+            let imagesHtml = '';
+            if (review.images && review.images.length > 0) {
+                imagesHtml = `
+                    <div class="review-gallery">
+                        ${review.images.map(img => `<img src="${img}" onclick="window.openImageZoom('${img}')">`).join('')}
+                    </div>`;
+            }
+
+            return `
+            <div class="py-4 border-b last:border-0">
+                <div class="flex justify-between items-start">
+                    <div class="flex items-center gap-2 mb-1">
+                        <div class="w-6 h-6 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
+                            ${review.userAvatar ? `<img src="${review.userAvatar}" class="w-full h-full">` : `<i class="fas fa-user text-xs text-gray-400"></i>`}
+                        </div>
+                        <span class="text-xs text-gray-500">${escapeHtml(review.userName || 'Anonymous')}</span>
+                    </div>
+                    <span class="text-[10px] text-gray-400">${review.createdAt?.toDate ? review.createdAt.toDate().toLocaleDateString() : 'Just now'}</span>
+                </div>
+                
+                <div class="display-stars text-xs text-yellow-400 mb-1">${renderStars(review.rating)}</div>
+                
+                <p class="text-sm text-gray-700 leading-snug">${escapeHtml(review.reviewText)}</p>
+                
+                ${imagesHtml}
+                
+                ${review.status === 'Pending' ? `<p class="text-[10px] text-orange-500 mt-1 italic"><i class="fas fa-clock"></i> Pending Approval</p>` : ''}
+            </div>`;
+        }).join(''); 
+
+        container.innerHTML = headerHTML + `<div id="reviews-list" class="space-y-1">${reviewsHTML}</div>`;
+        container.style.display = 'block';
+    };
+
+    // Helper for image zoom
+    window.openImageZoom = (src) => {
+        initializeZoomSwiper([src], 0);
+    };
+
+    const renderRecommendedProducts = async (currentProductId, currentCategory) => {
+        const container = document.getElementById('recommended-products-container');
+        const section = document.getElementById('recommended-products-section');
+        container.innerHTML = renderSkeletonLoader(4);
+        section.classList.remove('hidden');
+
+        try {
+            const productsRef = collection(db, "products");
+            const q = query(
+                productsRef, 
+                where("category", "==", currentCategory),
+                limit(10) 
+            );
+            
+            const snapshot = await getDocs(q);
+            let recommended = snapshot.docs
+                .map(doc => ({ id: doc.id, ...doc.data() }))
+                .filter(p => p.id !== currentProductId)
+                .slice(0, 6);
+
+            if (recommended.length > 0) {
+                container.innerHTML = recommended.map(p => renderProductCard(p.id, p)).join('');
+            } else {
+                section.classList.add('hidden');
+            }
+        } catch (error) {
+            console.error("Error fetching recommended products:", error);
+            section.classList.add('hidden');
+        }
+    };
+
+    const renderStars = (rating) => { let stars = ''; for (let i = 1; i <= 5; i++) { stars += `<i class="fas fa-star ${i <= Math.round(rating) ? '' : 'empty'}"></i>`; } return stars; };
+
+    const listenToNotifications = () => { 
+        const list = document.getElementById('notifications-list'), emptyView = document.getElementById('notifications-empty-view'); 
+        list.innerHTML = `<div class="text-center py-16"><div class="loading-spinner mx-auto"></div></div>`; 
+        emptyView.classList.add('hidden'); 
+        
+        if (notificationsUnsubscribe) notificationsUnsubscribe();
+
+        const q = query(collection(db, "notifications"), orderBy("createdAt", "desc")); 
+        
+        notificationsUnsubscribe = onSnapshot(q, (snapshot) => { 
+            if(snapshot.empty) { 
+                list.innerHTML = ''; 
+                emptyView.classList.remove('hidden'); 
+            } else { 
+                list.innerHTML = snapshot.docs.map(doc => renderNotificationCard(doc.data())).join(''); 
+                emptyView.classList.add('hidden'); 
+                const latestTimestamp = snapshot.docs[0].data().createdAt?.seconds || 0; 
+                localStorage.setItem('lastReadNotificationTimestamp', latestTimestamp); 
+                document.getElementById('notification-dot').classList.add('hidden'); 
+            } 
+        }, (error) => { 
+            list.innerHTML = '<p class="text-center text-red-500">Could not load notifications.</p>'; 
+        }); 
+    };
+
+    const renderNotificationCard = (notif) => {
+        return `<div class="bg-white p-3 rounded shadow-sm flex gap-3">
+            <div class="flex-shrink-0">
+                    <img src="${notif.imageUrl || 'https://via.placeholder.com/50'}" class="w-12 h-12 rounded object-cover">
+            </div>
+            <div>
+                <h4 class="font-bold text-sm text-gray-800">${escapeHtml(notif.title)}</h4>
+                <p class="text-xs text-gray-600 mt-1">${escapeHtml(notif.message)}</p>
+                <p class="text-xs text-gray-400 mt-1">${notif.createdAt?.toDate().toLocaleDateString()}</p>
+            </div>
+        </div>`;
+    }
+    
+    document.getElementById('notification-bell-btn').addEventListener('click', () => showSection('notifications'));
+
+    const updateCartCount = () => { const count = userCart.reduce((sum, item) => sum + item.quantity, 0); document.getElementById('cart-count').textContent = count; document.getElementById('cart-count').style.display = count > 0 ? 'flex' : 'none'; };
+    const getCartItemId = (productId, variation = null) => { if (!variation || Object.keys(variation).length === 0) return productId; const sortedKeys = Object.keys(variation).sort(); const variationString = sortedKeys.map(key => `${key}-${variation[key]}`).join('_'); return `${productId}_${variationString}`; }
+    
+    window.addToCart = () => openVariationPopup('addToCart');
+    window.buyNow = () => openVariationPopup('buyNow');
+    
+    const _performAddToCart = async () => {
+        const { productData, popupSelectedCombination, popupQuantity } = currentProductState;
+        
+        const itemToAdd = { 
+            productId: productData.id, 
+            name: productData.name, 
+            variation: popupSelectedCombination ? popupSelectedCombination.combination : null, 
+            price: popupSelectedCombination ? popupSelectedCombination.price : productData.price, 
+            imageUrl: (popupSelectedCombination && popupSelectedCombination.imageUrl) ? popupSelectedCombination.imageUrl : productData.imageUrl, 
+            stock: popupSelectedCombination ? popupSelectedCombination.stock : productData.stock,
+            quantity: popupQuantity
+        };
+
+        if (auth.currentUser) {
+            const cartItemId = getCartItemId(itemToAdd.productId, itemToAdd.variation);
+            const cartItemRef = doc(db, `users/${auth.currentUser.uid}/cartItems`, cartItemId);
+            try {
+                await setDoc(cartItemRef, { ...itemToAdd, addedAt: serverTimestamp() }, { merge: true });
+                showToast('Added to cart!');
+            } catch (e) { showToast('Error adding to cart', '#ef4444'); }
+        } else {
+            // Guest Cart Logic
+            let guestCart = JSON.parse(localStorage.getItem('guestCart') || '[]');
+            const cartItemId = getCartItemId(itemToAdd.productId, itemToAdd.variation);
+            const existingIndex = guestCart.findIndex(i => getCartItemId(i.productId, i.variation) === cartItemId);
+            
+            if (existingIndex > -1) {
+                guestCart[existingIndex].quantity += popupQuantity;
+            } else {
+                guestCart.push({...itemToAdd, id: cartItemId});
+            }
+            localStorage.setItem('guestCart', JSON.stringify(guestCart));
+            userCart = guestCart; 
+            updateCartCount();
+            showToast('Added to cart (Guest)!');
+        }
+        closeVariationPopup();
+    };
+
+    const _performBuyNow = async () => {
+        const { productData, popupSelectedCombination, popupQuantity } = currentProductState;
+        const itemToBuy = { 
+            productId: productData.id, 
+            name: productData.name, 
+            variation: popupSelectedCombination ? popupSelectedCombination.combination : null, 
+            price: popupSelectedCombination ? popupSelectedCombination.price : productData.price, 
+            imageUrl: (popupSelectedCombination && popupSelectedCombination.imageUrl) ? popupSelectedCombination.imageUrl : productData.imageUrl, 
+            stock: popupSelectedCombination ? popupSelectedCombination.stock : productData.stock, 
+            quantity: popupQuantity 
+        };
+        
+        sessionStorage.setItem('buyNowItem', JSON.stringify(itemToBuy));
+        closeVariationPopup();
+        showSection('checkout'); // সরাসরি চেকআউটে চলে যাবে
+    };
+
+    window.updateCartQuantity = async (cartItemId, change) => { 
+        if (!auth.currentUser) return; 
+        
+        const cartSection = document.getElementById('cart-items');
+        cartSection.style.opacity = '0.5';
+        cartSection.style.pointerEvents = 'none';
+
+        const cartItemRef = doc(db, `users/${auth.currentUser.uid}/cartItems`, cartItemId); 
+        try { 
+            await runTransaction(db, async (transaction) => { 
+                const cartDoc = await transaction.get(cartItemRef); 
+                if (!cartDoc.exists()) return; 
+                const data = cartDoc.data(); 
+                const newQuantity = data.quantity + change; 
+                if (newQuantity > data.stock) throw new Error("Not enough stock available."); 
+                if (newQuantity > 0) transaction.update(cartItemRef, { quantity: newQuantity }); 
+                else transaction.delete(cartItemRef); 
+            }); 
+        } catch(e) { 
+            showToast(e.message || 'Failed to update cart.', '#ef4444'); 
+        } finally {
+            cartSection.style.opacity = '1';
+            cartSection.style.pointerEvents = 'auto';
+        }
+    }
+
+    window.deleteFromCart = async (cartItemId) => { if (!auth.currentUser) return; if(confirm('Are you sure you want to remove this item?')) { try { await deleteDoc(doc(db, `users/${auth.currentUser.uid}/cartItems`, cartItemId)); } catch(e) { showToast('Failed to delete item.', '#ef4444'); } } };
+    
+    const renderCart = () => { 
+        updateCartCount(); const emptyView = document.getElementById('cart-empty-view'), itemsContainer = document.getElementById('cart-items'), summaryContainer = document.getElementById('cart-summary');
+        if (userCart.length === 0) { itemsContainer.innerHTML = ''; emptyView.classList.remove('hidden'); summaryContainer.classList.add('hidden'); return; } 
+        emptyView.classList.add('hidden'); summaryContainer.classList.remove('hidden'); 
+        const subtotal = userCart.reduce((sum, item) => sum + (item.price * item.quantity), 0); 
+        itemsContainer.innerHTML = userCart.map(item => {
+            let variationText = '';
+            if (item.variation && typeof item.variation === 'object') {
+                variationText = `<span class="text-xs text-gray-500 block mt-1">${Object.entries(item.variation).map(([key, value]) => `${key}: ${value}`).join(', ')}</span>`;
+            }
+            return `<div class="bg-white rounded p-3 flex items-start"><img src="${escapeHtml(item.imageUrl)}" class="w-20 h-20 object-cover rounded mr-3" loading="lazy" onclick="window.viewProduct('${item.productId}')"><div class="flex-1"><h4 class="text-sm font-medium text-gray-800 line-clamp-2" onclick="window.viewProduct('${item.productId}')">${escapeHtml(item.name)}</h4>${variationText}<p class="text-daraz-orange font-bold text-base mt-1">৳${item.price}</p><div class="flex items-center mt-2"><button onclick="window.updateCartQuantity('${item.id}', -1)" class="quantity-btn rounded-l">-</button><span class="px-4 py-1.5 text-sm border-t border-b">${item.quantity}</span><button onclick="window.updateCartQuantity('${item.id}', 1)" class="quantity-btn rounded-r">+</button></div></div><button onclick="window.deleteFromCart('${item.id}')" class="ml-2 text-gray-400 hover:text-red-500"><i class="fas fa-trash-alt"></i></button></div>`;
+        }).join(''); 
+        summaryContainer.innerHTML = `<div><span class="font-bold text-lg text-daraz-orange">৳${subtotal.toLocaleString()}</span></div><button onclick="showSection('checkout')" class="bg-daraz-orange text-white font-bold py-3 px-8 rounded-full glow-on-hover">Checkout (${userCart.reduce((sum, item) => sum + item.quantity, 0)})</button>`; 
+    };
+    
+    const variationPopup = document.getElementById('variation-popup-modal');
+    const openVariationPopup = (action) => {
+        // এখানে আগে লগইন চেক ছিল, সেটা আমরা মুছে দিয়েছি
+        const { productData, selectedOptions } = currentProductState;
+        if(!productData) return; 
+
+        currentProductState.popupAction = action;
+        currentProductState.popupQuantity = 1;
+        currentProductState.popupSelectedOptions = { ...selectedOptions };
+        currentProductState.popupSelectedCombination = currentProductState.selectedCombination;
+        
+        document.getElementById('popup-product-image').src = productData.imageUrl;
+        document.getElementById('popup-quantity-display').textContent = '1';
+        
+        const confirmBtn = document.getElementById('popup-confirm-btn');
+        confirmBtn.className = 'font-bold w-full py-3'; 
+        if (action === 'buyNow') {
+            confirmBtn.classList.add('bg-blue-500');
+            confirmBtn.style.backgroundColor = '#3b82f6';
+        } else {
+            confirmBtn.classList.add('bg-daraz-orange');
+            confirmBtn.style.backgroundColor = 'var(--daraz-orange)';
+        }
+
+        const pageSelector = document.getElementById('variation-selector');
+        const popupSelectorContainer = document.getElementById('popup-variation-selector');
+        popupSelectorContainer.innerHTML = pageSelector ? pageSelector.innerHTML : '';
+        
+        if (pageSelector) {
+            Object.entries(currentProductState.popupSelectedOptions).forEach(([type, value]) => {
+                const btn = popupSelectorContainer.querySelector(`.variation-option[data-type="${type}"][data-value="${value}"]`);
+                if (btn) btn.classList.add('active');
+            });
+        }
+
+        updateVariationView('popup');
+        variationPopup.classList.add('active');
+    };
+
+    const closeVariationPopup = () => {
+        variationPopup.classList.remove('active');
+    };
+
+    document.getElementById('variation-popup-backdrop').addEventListener('click', closeVariationPopup);
+    document.getElementById('popup-close-btn').addEventListener('click', closeVariationPopup);
+    document.getElementById('popup-variation-selector').addEventListener('click', (e) => handleVariationSelection(e, 'popup'));
+
+    document.getElementById('popup-quantity-plus').addEventListener('click', () => {
+        const combination = currentProductState.popupSelectedCombination || currentProductState.productData;
+        if (!combination) return;
+        if (currentProductState.popupQuantity < combination.stock) {
+            currentProductState.popupQuantity++;
+            document.getElementById('popup-quantity-display').textContent = currentProductState.popupQuantity;
+            updateVariationView('popup');
+        } else {
+            showToast('Maximum stock reached', '#ef4444');
+        }
+    });
+
+    document.getElementById('popup-quantity-minus').addEventListener('click', () => {
+        if (currentProductState.popupQuantity > 1) {
+            currentProductState.popupQuantity--;
+            document.getElementById('popup-quantity-display').textContent = currentProductState.popupQuantity;
+            updateVariationView('popup');
+        }
+    });
+
+    document.getElementById('popup-confirm-btn').addEventListener('click', () => {
+        const { productData, popupAction, popupSelectedCombination } = currentProductState;
+        if (productData.hasVariations && !popupSelectedCombination) {
+            return showToast('Please select a valid combination.', '#ef4444');
+        }
+        if (popupAction === 'addToCart') {
+            _performAddToCart();
+        } else if (popupAction === 'buyNow') {
+            _performBuyNow();
+        }
+    });
+
+
+    const updateCheckoutSummary = () => { 
+        const buyNowItemJSON = sessionStorage.getItem('buyNowItem');
+        const itemsForCheckout = buyNowItemJSON ? [JSON.parse(buyNowItemJSON)] : userCart;
+
+        if (itemsForCheckout.length === 0) return; 
+
+        const appliedCouponJSON = sessionStorage.getItem('appliedCoupon');
+        const appliedCoupon = appliedCouponJSON ? JSON.parse(appliedCouponJSON) : null;
+        
+        const subtotal = itemsForCheckout.reduce((sum, item) => sum + (item.price * item.quantity), 0); 
+        const selectedLocationRadio = document.querySelector('input[name="deliveryLocation"]:checked'); 
+        if (!selectedLocationRadio) return; 
+        const deliveryCost = selectedLocationRadio.value === 'inside' ? (storeSettings.deliveryCosts.inside || 60) : (storeSettings.deliveryCosts.outside || 120); 
+        const discount = appliedCoupon ? appliedCoupon.discountAmount : 0; 
+        const total = Math.max(0, subtotal + deliveryCost - discount); 
+        document.getElementById('checkout-subtotal').textContent = `৳${subtotal.toLocaleString()}`; 
+        document.getElementById('checkout-delivery-cost').textContent = `৳${deliveryCost.toLocaleString()}`; 
+        const discountRow = document.getElementById('checkout-discount-row'); 
+        if(appliedCoupon) { 
+            document.getElementById('checkout-discount').textContent = `- ৳${discount.toLocaleString()}`; 
+            discountRow.classList.remove('hidden'); 
+        } else { 
+            discountRow.classList.add('hidden'); 
+        } 
+        document.getElementById('checkout-total').textContent = `৳${total.toLocaleString()}`; 
+    };
+    
+    const saveCheckoutFormState = () => {
+        const form = {
+            name: document.getElementById('delivery-name').value,
+            phone: document.getElementById('delivery-phone').value,
+            address: document.getElementById('delivery-address').value,
+            location: document.querySelector('input[name="deliveryLocation"]:checked')?.value
+        };
+        sessionStorage.setItem('checkoutForm', JSON.stringify(form));
+    };
+
+    const loadCheckoutFormState = () => {
+        const savedForm = JSON.parse(sessionStorage.getItem('checkoutForm') || '{}');
+        document.getElementById('delivery-name').value = savedForm.name || '';
+        document.getElementById('delivery-phone').value = savedForm.phone || '';
+        document.getElementById('delivery-address').value = savedForm.address || '';
+        if(savedForm.location) {
+            const radio = document.querySelector(`input[name="deliveryLocation"][value="${savedForm.location}"]`);
+            if (radio) radio.checked = true;
+        }
+    };
+
+    const renderCheckout = () => { 
+        const buyNowItemJSON = sessionStorage.getItem('buyNowItem');
+        const itemsForCheckout = buyNowItemJSON ? [JSON.parse(buyNowItemJSON)] : userCart;
+        if (itemsForCheckout.length === 0) return showSection('home');
+        
+        const locationDiv = document.getElementById('delivery-location-options'); 
+        locationDiv.innerHTML = `<label class="flex items-center p-3 border rounded-lg cursor-pointer"><input type="radio" name="deliveryLocation" value="inside" class="form-radio text-daraz-orange ring-daraz-orange" checked><span class="ml-3 flex-1">Inside City</span><span class="font-bold text-daraz-orange">৳${storeSettings.deliveryCosts.inside || 60}</span></label><label class="flex items-center p-3 border rounded-lg cursor-pointer"><input type="radio" name="deliveryLocation" value="outside" class="form-radio text-daraz-orange ring-daraz-orange"><span class="ml-3 flex-1">Outside City</span><span class="font-bold text-daraz-orange">৳${storeSettings.deliveryCosts.outside || 120}</span></label>`; 
+        
+        loadCheckoutFormState();
+        
+        const appliedCouponJSON = sessionStorage.getItem('appliedCoupon');
+        if (appliedCouponJSON) {
+            const coupon = JSON.parse(appliedCouponJSON);
+            document.getElementById('coupon-code-input').value = coupon.code;
+            document.getElementById('coupon-code-input').disabled = true;
+            document.getElementById('apply-coupon-btn').textContent = 'Remove';
+        } else {
+            document.getElementById('coupon-code-input').value = '';
+            document.getElementById('coupon-code-input').disabled = false;
+            document.getElementById('apply-coupon-btn').textContent = 'Apply';
+        }
+
+        document.querySelectorAll('input[name="deliveryLocation"]').forEach(radio => radio.addEventListener('change', () => {
+            saveCheckoutFormState();
+            updateCheckoutSummary();
+        }));
+        document.getElementById('delivery-form').addEventListener('input', saveCheckoutFormState);
+        
+        updateCheckoutSummary(); 
+    };
+    
+    document.getElementById('apply-coupon-btn').addEventListener('click', async () => { 
+        const btn = document.getElementById('apply-coupon-btn'), input = document.getElementById('coupon-code-input');
+        const appliedCouponJSON = sessionStorage.getItem('appliedCoupon');
+        
+        if(appliedCouponJSON) { 
+            sessionStorage.removeItem('appliedCoupon');
+            input.value = ''; 
+            input.disabled = false; 
+            btn.textContent = 'Apply'; 
+            showToast('Coupon removed.'); 
+            updateCheckoutSummary(); 
+            return; 
+        } 
+        
+        const code = input.value.toUpperCase().trim(); 
+        if (!code) return showToast('Please enter a coupon code.', '#ef4444'); 
+        const couponRef = doc(db, "coupons", code), couponSnap = await getDoc(couponRef); 
+        if (!couponSnap.exists()) return showToast('Invalid coupon code.', '#ef4444'); 
+        const coupon = couponSnap.data(), now = new Date(), startDate = coupon.startDate.toDate(), endDate = coupon.endDate.toDate(); 
+        if (now < startDate) return showToast('This coupon is not active yet.', '#ef4444'); 
+        if (now > endDate) return showToast('This coupon has expired.', '#ef4444'); 
+        
+        const appliedCoupon = { code: couponSnap.id, ...coupon };
+        sessionStorage.setItem('appliedCoupon', JSON.stringify(appliedCoupon));
+        
+        input.disabled = true; 
+        btn.textContent = 'Remove'; 
+        showToast(`Coupon applied! You saved ৳${coupon.discountAmount}.`); 
+        updateCheckoutSummary(); 
+    });
+
+    document.getElementById('place-order-btn').addEventListener('click', async () => { 
+        const buyNowItemJSON = sessionStorage.getItem('buyNowItem');
+        const buyNowItem = buyNowItemJSON ? JSON.parse(buyNowItemJSON) : null;
+        const itemsForOrder = (buyNowItem ? [buyNowItem] : userCart).map(({ stock, ...rest }) => rest); 
+        
+        if (itemsForOrder.length === 0) { showSection('home'); return showToast('Your cart is empty.', '#ef4444'); } 
+        
+        const form = document.getElementById('delivery-form'); 
+        if (!form.checkValidity()) return form.reportValidity(); 
+        
+        const btn = document.getElementById('place-order-btn'); 
+        btn.disabled = true; 
+        btn.innerHTML = `<div class="loading-spinner"></div>`; 
+        
+        try { 
+            const orderCollectionRef = collection(db, "orders");
+            const newOrderRef = doc(orderCollectionRef); // নতুন আইডি জেনারেট করা
+
+            await runTransaction(db, async (transaction) => { 
+                const appliedCouponJSON = sessionStorage.getItem('appliedCoupon');
+                const appliedCoupon = appliedCouponJSON ? JSON.parse(appliedCouponJSON) : null;
+                const subtotal = itemsForOrder.reduce((s, i) => s + (i.price * i.quantity), 0); 
+                const location = document.querySelector('input[name="deliveryLocation"]:checked').value; 
+                const deliveryCost = location === 'inside' ? storeSettings.deliveryCosts.inside : storeSettings.deliveryCosts.outside; 
+                const discount = appliedCoupon ? appliedCoupon.discountAmount : 0; 
+                
+                const orderData = { 
+                    userId: auth.currentUser ? auth.currentUser.uid : 'Guest_User', 
+                    customerInfo: { 
+                        name: form.elements['delivery-name'].value, 
+                        phone: form.elements['delivery-phone'].value, 
+                        address: form.elements['delivery-address'].value 
+                    }, 
+                    items: itemsForOrder, 
+                    subtotal, deliveryCost, 
+                    totalPrice: Math.max(0, subtotal + deliveryCost - discount), 
+                    coupon: appliedCoupon ? { code: appliedCoupon.code, discount: appliedCoupon.discountAmount } : null, 
+                    status: 'Pending', 
+                    paymentMethod: 'COD',
+                    createdAt: serverTimestamp() 
+                }; 
+                
+                transaction.set(newOrderRef, orderData); 
+
+                if (!buyNowItem) { 
+                    if(auth.currentUser) {
+                        userCart.forEach(item => transaction.delete(doc(db, `users/${auth.currentUser.uid}/cartItems`, item.id))); 
+                    } else {
+                        localStorage.removeItem('guestCart');
+                        userCart = [];
+                    }
+                } 
+            }); 
+
+            // গেস্টদের জন্য অর্ডার আইডি লোকালি সেভ করা যাতে পরে তারা দেখতে পারে
+            if (!auth.currentUser) {
+                let guestOrderIds = JSON.parse(localStorage.getItem('guestOrderIds') || '[]');
+                guestOrderIds.push(newOrderRef.id);
+                localStorage.setItem('guestOrderIds', JSON.stringify(guestOrderIds));
+            }
+
+            showToast('Order placed successfully!'); 
+            form.reset(); 
+            clearCheckoutSession();
+            
+            if(!auth.currentUser) {
+                alert("আপনার অর্ডারটি সফলভাবে সম্পন্ন হয়েছে। আইডি: " + newOrderRef.id);
+                showSection('home');
+            } else {
+                showSection('orders'); 
+            }
+        } catch (error) { 
+            console.error(error);
+            showToast(`Failed to place order: ${error.message}`, '#ef4444'); 
+        } finally { 
+            btn.disabled = false; 
+            btn.innerHTML = 'Place Order'; 
+        } 
+    });
+    
+    window.toggleWishlist = async (productId) => {
+        const isCurrentlyInWishlist = userWishlist.includes(productId);
+        
+        // ১. সাথে সাথে সব জায়গায় হার্ট আইকন আপডেট (UI Feedback)
+        const buttons = document.querySelectorAll(`.wishlist-btn[data-productid="${productId}"]`);
+        buttons.forEach(button => {
+            const icon = button.querySelector('.wishlist-btn-icon');
+            if (isCurrentlyInWishlist) {
+                icon.classList.remove('fas'); icon.classList.add('far');
+                button.classList.remove('text-red-500');
+                if (document.getElementById('product-view-section').contains(button)) button.classList.add('text-gray-500');
+                else button.classList.add('text-gray-300');
+            } else {
+                icon.classList.remove('far'); icon.classList.add('fas');
+                button.classList.add('text-red-500');
+                button.classList.remove('text-gray-300', 'text-gray-500');
+            }
+        });
+
+        // ২. ডাটা সেভ করার লজিক
+        if (!auth.currentUser) {
+            // গেস্ট মোড (LocalStorage)
+            let guestWish = JSON.parse(localStorage.getItem('guestWishlist') || '[]');
+            if (isCurrentlyInWishlist) {
+                guestWish = guestWish.filter(id => id !== productId);
+                showToast('Removed from wishlist (Guest).');
+            } else {
+                guestWish.push(productId);
+                showToast('Added to wishlist (Guest)!');
+            }
+            localStorage.setItem('guestWishlist', JSON.stringify(guestWish));
+            userWishlist = guestWish; // গ্লোবাল ভ্যারিয়েবল আপডেট
+            
+            // যদি ইউজার উইশলিস্ট পেজে থাকে তবে সাথে সাথে রেন্ডার করা
+            if (document.getElementById('wishlist-section').classList.contains('active-section')) renderWishlist();
+            return;
+        }
+
+        // লগইন মোড (Firebase)
+        const docRef = doc(db, `users/${auth.currentUser.uid}/wishlist`, productId);
+        try {
+            if (isCurrentlyInWishlist) {
+                await deleteDoc(docRef);
+                showToast('Removed from wishlist.');
+            } else {
+                await setDoc(docRef, { productId, addedAt: serverTimestamp() });
+                showToast('Added to wishlist!');
+            }
+        } catch(e) {
+            showToast('Action failed. Please try again.', '#ef4444');
+        }
+    };
+    const renderWishlist = async () => {
+        const container = document.getElementById('wishlist-products-container');
+        const emptyView = document.getElementById('wishlist-empty-view');
+
+        // চেক করবে উইশলিস্ট খালি কি না
+        if (!userWishlist || userWishlist.length === 0) {
+            emptyView.classList.remove('hidden');
+            container.innerHTML = '';
+            return;
+        }
+
+        emptyView.classList.add('hidden');
+        container.innerHTML = renderSkeletonLoader(6);
+
+        try {
+            // Firestore থেকে পণ্যগুলোর তথ্য নিয়ে আসা
+            const productDocs = await Promise.all(userWishlist.map(id => getDoc(doc(db, 'products', id))));
+            const products = productDocs
+                .filter(d => d.exists())
+                .map(d => ({id: d.id, ...d.data()}));
+            
+            if (products.length > 0) {
+                container.innerHTML = products.map(p => renderProductCard(p.id, p)).join('');
+            } else {
+                emptyView.classList.remove('hidden');
+                container.innerHTML = '';
+            }
+        } catch(e) {
+            console.error("Wishlist Error:", e);
+            container.innerHTML = '<p class="text-center text-red-500">Could not load wishlist. Please refresh.</p>';
+        }
+    };
+// --- UPDATED RENDER ORDER CARD (With Return Button Logic) ---
+    const renderOrderCard = (id, order) => { 
+        const statusColor = { 
+            'Pending': 'text-gray-500', 
+            'Processing': 'text-blue-500', 
+            'Shipped': 'text-purple-500', 
+            'On The Way': 'text-purple-600',
+            'Delivered': 'text-green-500', 
+            'Cancelled': 'text-red-500',
+            'Returned': 'text-red-600'
+        }; 
+
+        // ৭ দিনের মধ্যে রিটার্ন করা যাবে কিনা চেক করা হচ্ছে
+        const canReturnOrder = order.status === 'Delivered' && isReturnable(order.createdAt);
+        
+        const itemsHtml = order.items.map((item, index) => { 
+            let variationText = ''; 
+            if (item.variation && typeof item.variation === 'object') { 
+                variationText = `<p class="text-xs text-gray-500 mt-1">${Object.values(item.variation).join(', ')}</p>`; 
+            }
+            
+            // রিটার্ন বাটন বা স্ট্যাটাস ব্যাজ দেখানোর লজিক
+            let actionHtml = '';
+            
+            if (item.returnStatus) {
+                // যদি আগেই রিটার্ন রিকোয়েস্ট করা থাকে
+                const badgeColors = {
+                    'Pending': 'bg-yellow-100 text-yellow-800',
+                    'Approved': 'bg-blue-100 text-blue-800',
+                    'Rejected': 'bg-red-100 text-red-800',
+                    'Refunded': 'bg-green-100 text-green-800'
+                };
+                const colorClass = badgeColors[item.returnStatus] || 'bg-gray-100 text-gray-800';
+                actionHtml = `<span class="text-[10px] font-bold px-2 py-1 rounded ${colorClass} mt-2 inline-block">Return: ${item.returnStatus}</span>`;
+            } else if (canReturnOrder) {
+                // যদি রিটার্ন করার সময় থাকে এবং ডেলিভারড হয়
+                actionHtml = `<button onclick="window.openReturnModal('${id}', ${index})" class="mt-2 text-xs border border-daraz-orange text-daraz-orange px-3 py-1 rounded hover:bg-orange-50 font-medium">Return / Replace</button>`;
+            } else if (order.status === 'Delivered') {
+                // সময় শেষ হয়ে গেলে
+                actionHtml = `<span class="text-[10px] text-gray-400 mt-2 inline-block">Return window expired</span>`;
+            }
+
+            return `
+            <div class="flex items-start my-2 pb-2 border-b last:border-b-0 border-gray-100">
+                <img src="${escapeHtml(item.imageUrl)}" class="w-16 h-16 object-cover rounded mr-3 bg-gray-100" loading="lazy">
+                <div class="flex-1">
+                    <p class="text-sm text-gray-800 line-clamp-2">${escapeHtml(item.name)}</p>
+                    ${variationText}
+                    <div class="flex justify-between items-center mt-1">
+                        <p class="text-xs text-gray-400">Qty: ${item.quantity}</p>
+                        <p class="text-sm font-semibold">৳${item.price}</p>
+                    </div>
+                    ${actionHtml}
+                </div>
+            </div>`; 
+        }).slice(0, 2).join('');
+
+        const extraItems = order.items.length > 2 
+            ? `<p class="text-center text-xs text-gray-500 my-2">+ ${order.items.length - 2} more items</p>` 
+            : '';
+
+        return `
+        <div class="bg-white rounded-lg p-3 shadow-sm border border-gray-100">
+            <div class="flex justify-between items-center text-xs mb-2 pb-2 border-b text-gray-500">
+                <span>Order: <strong>#${id.substring(0, 8)}</strong></span>
+                <span class="font-bold text-sm ${statusColor[order.status] || 'text-gray-500'}">${order.status}</span>
+            </div>
+            ${itemsHtml}
+            ${extraItems}
+            <div class="text-right mt-2 pt-2 border-t flex justify-between items-center">
+                 <span class="text-xs text-gray-400">${order.createdAt?.toDate ? order.createdAt.toDate().toLocaleDateString() : ''}</span>
+                 <div class="text-right">
+                    <span class="text-xs text-gray-500 block">Total: <span class="text-base font-bold text-daraz-orange">৳${order.totalPrice.toLocaleString()}</span></span>
+                    <button class="text-daraz-orange text-xs font-bold mt-1" onclick="window.showOrderDetails('${id}')">View Details >></button>
+                 </div>
+            </div>
+        </div>`; 
+    };
+    
+    window.showOrderDetails = async (orderId) => { 
+        const docSnap = await getDoc(doc(db, "orders", orderId)); 
+        if (!docSnap.exists()) return showToast('Order not found!', '#ef4444'); 
+        const order = docSnap.data(); 
+        const trackingSteps = [
+            { status: 'Pending', icon: 'fa-wallet' },
+            { status: 'Processing', icon: 'fa-cogs' },
+            { status: 'Shipped', icon: 'fa-truck' },
+            { status: 'Delivered', icon: 'fa-check-circle' }
+        ]; 
+        
+        let currentStepIndex = -1;
+        if(order.status === 'Pending') currentStepIndex = 0;
+        else if(order.status === 'Processing') currentStepIndex = 1;
+        else if(order.status === 'Shipped' || order.status === 'On The Way') currentStepIndex = 2;
+        else if(order.status === 'Delivered') currentStepIndex = 3;
+
+        let trackerHTML = ''; 
+        if (order.status !== 'Cancelled' && order.status !== 'Returned') { 
+            trackerHTML = `<div class="order-tracker">${trackingSteps.map((step, i) => `<div class="tracker-step ${currentStepIndex >= i ? 'completed' : ''}"><div class="tracker-icon"><i class="fas ${step.icon}"></i></div><span class="tracker-label">${step.status}</span><div class="tracker-line"><div class="tracker-line-progress"></div></div></div>`).join('')}</div>`; 
+        } 
+        
+        let itemsHTML = order.items.map(item => { let variationText = ''; if (item.variation && typeof item.variation === 'object') { variationText = `<br><span class="text-xs text-gray-500">(${Object.entries(item.variation).map(([key, value]) => `${key}: ${value}`).join(', ')})</span>`; } return `<div class="flex items-center text-sm py-2 border-b last:border-b-0"><img src="${escapeHtml(item.imageUrl)}" class="w-12 h-12 rounded object-cover mr-3" loading="lazy"/> <div class="flex-1">${escapeHtml(item.name)}${variationText}<br><span class="text-xs text-gray-500">Qty: ${item.quantity}</span></div> <span>৳${(item.price * item.quantity).toLocaleString()}</span></div>` }).join(''); 
+        
+        const paymentMethodText = order.paymentMethod === 'COD' ? 'Cash on Delivery' : (order.paymentMethod || 'Cash on Delivery');
+
+        document.getElementById('order-details-content').innerHTML = `<button onclick="window.hideOrderDetailsModal()" class="absolute top-2 right-3 text-2xl text-gray-500 hover:text-gray-800">&times;</button><div class="p-4"><h3 class="font-bold text-lg mb-2">Order Details</h3><p class="text-xs text-gray-500 mb-3">Order #${orderId}</p>${(order.status === 'Cancelled' || order.status === 'Returned') ? `<p class="text-center bg-red-100 text-red-600 font-bold p-2 rounded-lg my-3">This order is ${order.status}.</p>` : trackerHTML}<div class="mt-4"><h4 class="font-semibold mb-2">Items</h4>${itemsHTML}</div><div class="mt-4 bg-gray-50 p-3 rounded"><h4 class="font-semibold mb-2 text-sm">Delivery To</h4><p class="text-xs text-gray-600">${escapeHtml(order.customerInfo.name)}, ${escapeHtml(order.customerInfo.phone)}</p><p class="text-xs text-gray-600">${escapeHtml(order.customerInfo.address)}</p><p class="text-xs text-gray-600 mt-2 font-semibold">Payment: ${paymentMethodText}</p></div></div>`; showOrderDetailsModal(); 
+    };
+    
+    document.getElementById('order-tabs').addEventListener('click', (e) => { if (e.target.matches('.tab-button')) listenToOrders(e.target.dataset.status); });
+    document.getElementById('select-address-btn').addEventListener('click', async () => { if (!auth.currentUser) return showLoginModal(); const userDocSnap = await getDoc(doc(db, "users", auth.currentUser.uid)); const addresses = userDocSnap.exists() ? userDocSnap.data().addresses || [] : []; const list = document.getElementById('select-address-list'); list.innerHTML = ''; addresses.forEach(addr => { list.innerHTML += `<div class="address-card cursor-pointer" data-id="${addr.id}"><h4 class="font-semibold text-gray-800">${escapeHtml(addr.label)}</h4><p class="text-sm text-gray-600">${escapeHtml(addr.fullAddress)}</p><p class="text-xs text-gray-500">${escapeHtml(addr.receiverName)}, ${escapeHtml(addr.receiverPhone)}</p></div>`; }); if (addresses.length === 0) list.innerHTML = '<p class="text-center text-gray-500">No saved addresses.</p>'; list.querySelectorAll('.address-card').forEach(card => card.addEventListener('click', () => { list.querySelectorAll('.address-card').forEach(c => c.classList.remove('active-address')); card.classList.add('active-address'); })); showSelectAddressModal(); });
+    document.getElementById('confirm-select-address-btn').addEventListener('click', () => { const selected = document.querySelector('#select-address-list .address-card.active-address'); if (selected) { const addrId = selected.dataset.id; getDoc(doc(db, "users", auth.currentUser.uid)).then(snap => { const addr = snap.data().addresses.find(a => a.id === addrId); if (addr) { document.getElementById('delivery-name').value = addr.receiverName; document.getElementById('delivery-phone').value = addr.receiverPhone; document.getElementById('delivery-address').value = addr.fullAddress; hideSelectAddressModal(); showToast('Address selected!'); saveCheckoutFormState(); } }); } else { showToast('Please select an address.', '#ef4444'); } });
+    document.getElementById('manage-profile-link').addEventListener('click', (e) => { e.preventDefault(); if (!auth.currentUser) return showLoginModal(); document.getElementById('profile-management-view').classList.add('hidden'); document.getElementById('edit-profile-view').classList.remove('hidden'); }); document.getElementById('back-to-account-btn').addEventListener('click', () => { document.getElementById('profile-management-view').classList.remove('hidden'); document.getElementById('edit-profile-view').classList.add('hidden'); }); document.getElementById('profile-form').addEventListener('submit', async (e) => { e.preventDefault(); if (!auth.currentUser) return; const newName = document.getElementById('profile-name').value, newPhone = document.getElementById('profile-phone').value; try { await updateProfile(auth.currentUser, { displayName: newName }); await updateDoc(doc(db, "users", auth.currentUser.uid), { name: newName, phone: newPhone }); showToast('Profile updated successfully!'); } catch(e) { showToast('Failed to update profile.', '#ef4444'); } });
+    const renderAddresses = (addresses = []) => { const list = document.getElementById('address-list'); list.innerHTML = addresses.map(addr => `<div class="address-card" data-id="${addr.id}"><h4 class="font-semibold text-gray-800">${escapeHtml(addr.label)}</h4><p class="text-sm text-gray-600">${escapeHtml(addr.fullAddress)}</p><p class="text-xs text-gray-500">${escapeHtml(addr.receiverName)}, ${escapeHtml(addr.receiverPhone)}</p><div class="absolute top-2 right-2 space-x-2"><button class="text-daraz-orange text-sm edit-address-btn" data-id="${addr.id}">Edit</button><button class="text-red-500 text-sm delete-address-btn" data-id="${addr.id}">Delete</button></div></div>`).join(''); };
+    document.getElementById('address-list').addEventListener('click', async (e) => { if (!auth.currentUser) return; const target = e.target, userDocRef = doc(db, "users", auth.currentUser.uid); if (target.classList.contains('edit-address-btn')) { const addrId = target.dataset.id, userDocSnap = await getDoc(userDocRef), address = userDocSnap.data().addresses.find(a => a.id === addrId); document.getElementById('address-id').value = addrId; document.getElementById('address-label').value = address.label; document.getElementById('address-receiver-name').value = address.receiverName; document.getElementById('address-receiver-phone').value = address.receiverPhone; document.getElementById('address-full-address').value = address.fullAddress; document.getElementById('address-modal-title').textContent = 'Edit Address'; showAddressModal(); } else if (target.classList.contains('delete-address-btn')) { const addrId = target.dataset.id; if (confirm('Are you sure?')) try { const userDocSnap = await getDoc(userDocRef), addresses = userDocSnap.data().addresses.filter(a => a.id !== addrId); await updateDoc(userDocRef, { addresses }); showToast('Address deleted!'); } catch(e) { showToast('Failed to delete address.', '#ef4444'); } } });
+    document.getElementById('address-form').addEventListener('submit', async (e) => { e.preventDefault(); if (!auth.currentUser) return; const userDocRef = doc(db, "users", auth.currentUser.uid); let addressId = document.getElementById('address-id').value; const isEditing = !!addressId; if (!isEditing) addressId = Date.now().toString(); const newAddress = { id: addressId, label: document.getElementById('address-label').value, receiverName: document.getElementById('address-receiver-name').value, receiverPhone: document.getElementById('address-receiver-phone').value, fullAddress: document.getElementById('address-full-address').value, }; try { const userDocSnap = await getDoc(userDocRef); let addresses = userDocSnap.exists() ? userDocSnap.data().addresses || [] : []; const existingIndex = addresses.findIndex(a => a.id === addressId); if (existingIndex > -1) { addresses[existingIndex] = newAddress; showToast('Address updated!'); } else { addresses.push(newAddress); showToast('Address added!'); } await setDoc(userDocRef, { addresses }, { merge: true }); hideAddressModal(); } catch(e) { showToast(`Failed to save address: ${e.message}`, '#ef4444'); } });
+    const renderSupportLinks = (links = {}) => { const container = document.getElementById('support-links-container'); const linkData = [ { key: 'whatsapp', name: 'WhatsApp', icon: 'fab fa-whatsapp', color: '#25D366', text: 'Chat with us directly' }, { key: 'facebook', name: 'Facebook', icon: 'fab fa-facebook-messenger', color: '#00B2FF', text: 'Message our page' }, { key: 'instagram', name: 'Instagram', icon: 'fab fa-instagram', color: '#E4405F', text: 'Follow us for updates' }, { key: 'telegram', name: 'Telegram', icon: 'fab fa-telegram-plane', color: '#229ED9', text: 'Join our community' }, { key: 'youtube', name: 'YouTube', icon: 'fab fa-youtube', color: '#FF0000', text: 'Watch our videos' }, { key: 'mediafire', name: 'Download Our App', icon: 'fas fa-mobile-alt', color: '#1175E8', text: 'Get the full experience' }, ]; let html = linkData.map(link => (links[link.key] ? `<a href="${escapeHtml(links[link.key])}" target="_blank" class="flex items-center gap-4 p-3 bg-gray-50 rounded-lg hover:bg-gray-100"><i class="${link.icon} text-3xl" style="color: ${link.color};"></i><div><p class="font-semibold text-gray-800">${link.name}</p><p class="text-xs text-gray-500">${link.text}</p></div></a>` : '')).join(''); container.innerHTML = html || '<p class="text-center text-gray-500">Support links will be available soon.</p>'; };
+    const renderAboutUs = (about = {}) => { const container = document.getElementById('about-us-content'); if (about && about.content) { const formattedContent = about.content.split('\n').map(p => `<p>${escapeHtml(p)}</p>`).join(''); container.innerHTML = `<h2 class="text-2xl font-bold mb-4">${escapeHtml(about.title || 'About Us')}</h2><div class="prose max-w-none text-gray-600 space-y-4">${formattedContent}</div>`; } else { container.innerHTML = '<p class="text-center text-gray-500 py-16">Information about us is coming soon!</p>'; } };
+    
+    const startCountdown = () => { 
+        const timerEl = document.getElementById('countdown-timer'); 
+        if(!timerEl) return; 
+        
+        let targetTime = parseInt(localStorage.getItem('flashSaleEndTime'));
+        if (!targetTime || targetTime < Date.now()) {
+            targetTime = Date.now() + 2 * 60 * 60 * 1000;
+            localStorage.setItem('flashSaleEndTime', targetTime);
+        }
+
+        const updateTimer = () => {
+            const now = Date.now();
+            let diff = Math.floor((targetTime - now) / 1000);
+
+            if (diff <= 0) {
+                targetTime = Date.now() + 2 * 60 * 60 * 1000;
+                localStorage.setItem('flashSaleEndTime', targetTime);
+                diff = 2 * 60 * 60;
+            }
+
+            const h = String(Math.floor(diff / 3600)).padStart(2, '0');
+            const m = String(Math.floor((diff % 3600) / 60)).padStart(2, '0');
+            const s = String(diff % 60).padStart(2, '0');
+            
+            timerEl.innerHTML = `<span class="bg-gray-800 text-white font-bold w-6 h-6 flex items-center justify-center rounded">${h}</span>:<span class="bg-gray-800 text-white font-bold w-6 h-6 flex items-center justify-center rounded">${m}</span>:<span class="bg-gray-800 text-white font-bold w-6 h-6 flex items-center justify-center rounded">${s}</span>`;
+        };
+
+        updateTimer();
+        setInterval(updateTimer, 1000); 
+    };
+    
+    const ptrSpinner = document.getElementById('pull-to-refresh-spinner'); const contentArea = document.querySelector('main.content-area'); let startY = 0, isRefreshing = false;
+    
+    const handleRefresh = async () => { 
+        const activeSection = document.querySelector('.section.active-section'); 
+        if (!activeSection) return; 
+        const sectionId = activeSection.id.replace('-section', ''); 
+        switch(sectionId) { 
+            case 'home': 
+                await fetchProducts(true); 
+                listenToSliders(); 
+                listenToOffers();
+                listenToCampaigns();
+                break; 
+            case 'orders': 
+                const activeTab = document.querySelector('.tab-button.active'); 
+                listenToOrders(activeTab ? activeTab.dataset.status : 'all'); 
+                break; 
+            case 'wishlist': 
+                await renderWishlist(); 
+                break; 
+            case 'cart':
+                renderCart();
+                break;
+        } 
+    };
+// --- RETURN SYSTEM LOGIC (Paste inside module) ---
+
+    // 1. Check if returnable (7 days check)
+    const isReturnable = (orderDateTimestamp) => {
+        if (!orderDateTimestamp) return false;
+        const orderDate = orderDateTimestamp.toDate ? orderDateTimestamp.toDate() : new Date(orderDateTimestamp.seconds * 1000);
+        const sevenDaysAgo = new Date();
+        sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+        return orderDate > sevenDaysAgo;
+    };
+
+    // 2. Open Modal Logic
+    window.openReturnModal = (orderId, itemIndex) => {
+        const modal = document.getElementById('return-modal');
+        // Fetch order details simply to ensure fresh data
+        getDoc(doc(db, "orders", orderId)).then(docSnap => {
+            if(!docSnap.exists()) return;
+            const order = docSnap.data();
+            const item = order.items[itemIndex];
+
+            // Reset Form
+            document.getElementById('return-form').reset();
+            returnImages = [];
+            document.getElementById('return-image-preview-container').innerHTML = `
+                <label for="return-image-input" id="return-upload-btn" class="w-20 h-20 border-2 border-dashed border-gray-300 rounded flex flex-col items-center justify-center cursor-pointer hover:border-orange-500 transition-colors">
+                    <i class="fas fa-camera text-gray-400 text-lg"></i>
+                    <span class="text-[10px] text-gray-400 mt-1">Add Photo</span>
+                </label>`;
+            document.getElementById('return-upload-btn').style.display = 'flex';
+
+            // Fill Data
+            document.getElementById('return-order-id').textContent = orderId;
+            document.getElementById('return-order-id').dataset.fullId = orderId;
+            document.getElementById('return-product-id').value = item.productId || item.id;
+            document.getElementById('return-item-variation').value = JSON.stringify(item.variation || {});
+            
+            document.getElementById('return-product-img').src = item.imageUrl;
+            document.getElementById('return-product-name').textContent = item.name;
+            document.getElementById('return-product-price').textContent = `Qty: ${item.quantity} | ৳${item.price}`;
+
+            modal.classList.add('active');
+            modal.dataset.itemIndex = itemIndex; // Save index
+        });
+    };
+
+    // 3. Image Upload (Auto ImgBB)
+    document.getElementById('return-image-input').addEventListener('change', async (e) => {
+        const files = Array.from(e.target.files);
+        if (files.length === 0) return;
+
+        if (returnImages.length + files.length > 5) {
+            showToast("Max 5 images allowed.", "#ef4444");
+            return;
+        }
+
+        const previewContainer = document.getElementById('return-image-preview-container');
+        const uploadBtn = document.getElementById('return-upload-btn');
+        const toast = Toastify({ text: "Uploading...", duration: -1, style: { background: "#3b82f6" } }).showToast();
+
+        for (const file of files) {
+            const formData = new FormData();
+            formData.append("image", file);
+            try {
+                const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { method: "POST", body: formData });
+                const data = await res.json();
+                if (data.success) {
+                    const url = data.data.url;
+                    returnImages.push(url);
+                    const div = document.createElement('div');
+                    div.className = "w-20 h-20 relative rounded overflow-hidden border border-gray-200";
+                    div.innerHTML = `<img src="${url}" class="w-full h-full object-cover"><button type="button" onclick="window.removeReturnImage('${url}', this)" class="absolute top-0 right-0 bg-red-500 text-white w-5 h-5 flex items-center justify-center text-xs">&times;</button>`;
+                    previewContainer.insertBefore(div, uploadBtn);
+                }
+            } catch (error) { console.error(error); showToast("Upload failed.", "#ef4444"); }
+        }
+        toast.hideToast();
+        if (returnImages.length >= 5) uploadBtn.style.display = 'none';
+    });
+
+    window.removeReturnImage = (url, btnElement) => {
+        returnImages = returnImages.filter(img => img !== url);
+        btnElement.parentElement.remove();
+        document.getElementById('return-upload-btn').style.display = 'flex';
+    };
+
+    // 4. Submit Logic (UPDATED WITH ITEM INDEX)
+    document.getElementById('return-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (returnImages.length === 0) return showToast("Please upload proof.", "#ef4444");
+        
+        const submitBtn = document.getElementById('submit-return-btn');
+        submitBtn.disabled = true; 
+        submitBtn.textContent = 'Processing...';
+
+        try {
+            const orderId = document.getElementById('return-order-id').dataset.fullId;
+            // এই itemIndex আমরা মোডাল ওপেন করার সময় সেট করেছিলাম
+            const itemIndex = parseInt(document.getElementById('return-modal').dataset.itemIndex);
+            
+            const returnData = {
+                orderId: orderId,
+                productId: document.getElementById('return-product-id').value,
+                // 🔥 NEW: আইটেম ইনডেক্স পাঠানো হচ্ছে যাতে সঠিক আইটেম আপডেট হয়
+                itemIndex: itemIndex, 
+                userId: auth.currentUser.uid,
+                userName: auth.currentUser.displayName || "User",
+                reason: document.getElementById('return-reason').value,
+                description: document.getElementById('return-description').value,
+                images: returnImages,
+                status: "Pending",
+                createdAt: serverTimestamp()
+            };
+
+            await addDoc(collection(db, "returnRequests"), returnData);
+
+            // Update Order Item Status locally in DB
+            await runTransaction(db, async (transaction) => {
+                const orderRef = doc(db, "orders", orderId);
+                const orderDoc = await transaction.get(orderRef);
+                if (orderDoc.exists()) {
+                    const items = orderDoc.data().items;
+                    // ইনডেক্স দিয়ে আপডেট করা হচ্ছে যা ১০০% সঠিক হবে
+                    if(items[itemIndex]) {
+                        items[itemIndex].returnStatus = "Pending";
+                        transaction.update(orderRef, { items: items });
+                    }
+                }
+            });
+
+            showToast("Request submitted!");
+            document.getElementById('return-modal').classList.remove('active');
+        } catch (error) { 
+            console.error(error);
+            showToast("Error: " + error.message, "#ef4444"); 
+        } 
+        finally { submitBtn.disabled = false; submitBtn.textContent = 'Submit Request'; }
+    });
+    
+    
+    document.getElementById('close-return-modal-btn').addEventListener('click', () => {
+        document.getElementById('return-modal').classList.remove('active');
+    });
+    
+    contentArea.addEventListener('touchstart', (e) => { if (window.scrollY === 0) startY = e.touches[0].pageY; }, { passive: true });
+    contentArea.addEventListener('touchmove', (e) => { const currentY = e.touches[0].pageY; if (window.scrollY === 0 && currentY > startY && !isRefreshing) { const diff = currentY - startY; if (diff > 80) { ptrSpinner.classList.add('visible'); ptrSpinner.style.transform = 'translateX(-50%) scale(1) rotate(180deg)'; } else { ptrSpinner.style.transform = `translateX(-50%) scale(${diff / 100}) rotate(${diff * 2}deg)`; ptrSpinner.classList.add('visible'); } } }, { passive: true });
+    contentArea.addEventListener('touchend', async (e) => { const currentY = e.changedTouches[0].pageY; if (window.scrollY === 0 && currentY > startY && !isRefreshing) { const diff = currentY - startY; if (diff > 80) { isRefreshing = true; ptrSpinner.style.transition = 'transform 0.3s'; ptrSpinner.style.transform = 'translateX(-50%) scale(1)'; ptrSpinner.querySelector('.loading-spinner').style.animation = 'spin 1s linear infinite'; await handleRefresh(); setTimeout(() => { ptrSpinner.classList.remove('visible'); isRefreshing = false; }, 500); } else { ptrSpinner.classList.remove('visible'); } } else { ptrSpinner.classList.remove('visible'); } });
+
+    let isAppInitialized = false;
+    
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        initializeUserDependentState(user);
+    } else {
+        // --- এই লাইনটি যোগ করা হয়েছে গেস্টদের লোগো দেখানোর জন্য ---
+        listenToStoreSettings(); 
+        
+        // গেস্ট ইউজারদের ডাটা লোড করা
+        userCart = JSON.parse(localStorage.getItem('guestCart') || '[]');
+        userWishlist = JSON.parse(localStorage.getItem('guestWishlist') || '[]');
+        updateCartCount();
+        document.getElementById('user-display-name').textContent = "Guest User";
+        document.getElementById('login-button').classList.remove('hidden');
+        document.getElementById('logout-button').classList.add('hidden');
+        if (document.getElementById('cart-section').classList.contains('active-section')) renderCart();
+        if (document.getElementById('wishlist-section').classList.contains('active-section')) renderWishlist();
+    }
+    
+    if (!isAppInitialized) {
+        isAppInitialized = true;
+        const loader = document.getElementById('app-loader');
+        if(loader) loader.style.display = 'none';
+        const path = window.location.pathname.split('/').filter(p => p); 
+        const sectionId = path[0] || 'home';
+        const param = path[1] || null;
+        const initialState = { sectionId, param }; 
+        history.replaceState(initialState, '', window.location.pathname); 
+        renderPage(initialState);
+    }
+});
+document.getElementById('sort-btn').addEventListener('click', () => {
+    // উদাহরণস্বরূপ: প্রতি ক্লিকে সর্ট পরিবর্তন হবে
+    const currentSort = localStorage.getItem('searchSort') === 'price_asc' ? 'price_desc' : 'price_asc';
+    localStorage.setItem('searchSort', currentSort);
+    showToast(`Sorting by price: ${currentSort === 'price_asc' ? 'Low to High' : 'High to Low'}`);
+    renderSearchPage(currentSearchQuery, currentSort);
+});
+</script>
+</body>
+</html>
